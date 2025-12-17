@@ -84,10 +84,23 @@ filterLocationsForm?.addEventListener( 'change', ( event ) => {
     const jobTechnology = job.dataset.technology; // accedo al atributo data-technology del artículo
     const jobLocation = job.dataset.location; // accedo al atributo data-location del artículo
 
-    if ( selectedValue === '' || selectedValue === jobLocation ) {
-      job.style.display = 'flex'; // muestro el trabajo
+
+    // otra forma de recuperar el dataset usando getAttributre -> pero no solo puedes recuperar el data sino cualquier atributo que tenga el elemento, lo único que tienes que hacer es pasarle el nombre del atributo
+    // const jobLocation = job.getAttribute( 'data-location' ); // pero hay que el atributo entero
+    // si quiero el atributo class
+    // const jobClass = job.getAttribute( 'class' );
+    // la forma "nativa" es la de dataset aunque ambas funcionan igual
+
+    /*if ( selectedValue === '' || selectedValue === jobLocation ) {
+      // job.style.display = 'flex'; // muestro el trabajo -> pero es un poco mala practica porque estoy añadiendo un estilo en línea que no existe, lo ideal es tener un dilplay none y quitarlo desde js y así es más sencillo de mantener
+      job.classList.remove( 'is-hidden' ); // quito la clase hidden para mostrar el trabajo
     } else {
-      job.style.display = 'none'; // oculto el trabajo
-    }
+      job.classList.add( 'is-hidden' ); // oculto el trabajo
+    }*/
+
+    // otra forma de modificar los estilos siendo mucho más específicos entendiendo cuando se tienen qeu mostrar los estilos
+    const isShown = selectedValue === '' || selectedValue === jobLocation;
+    job.classList.toggle( 'is-hidden', !isShown ); // si isShown es true, quita la clase is-hidden, si es false, añade la clase is-hidden
+    // con este condicional nos podemos quitar el if else de arriba y dejarlo todo en una sola línea
   } )
 } )
