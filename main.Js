@@ -72,23 +72,28 @@ jobListingSections?.addEventListener( 'click', ( event ) => {
 
 // evento para cuando cambia un valor de los select
 const filterLocationsForm = document.querySelector( '#filter-location' );
-const jobsListings = document.querySelectorAll( '.job-listing-card' );
+// const jobsListings = document.querySelectorAll( '.job-listing-card' ); // si tengo esto fuera del listener y estoy usando el fetch, no tendrá la capacidad de usar los filtros porque en el momento en el que se ejecuta este código, los artículos aún no existen en el DOM, por lo que no los puede seleccionar. Hay que ponerlo dentro del fetch o como lo he puesto yo aquí, fuera del listener pero después de que se hayan creado los artículos
 
-filterLocationsForm?.addEventListener( 'change', ( event ) => {
-  console.log( filterLocationsForm.value ); // esto da el valor de la selección y no el nombre del elemento
+filterLocationsForm.addEventListener( 'change', ( event ) => {
+  const jobsListings = document.querySelectorAll( '.job-listing-card' ); // para asegurarme de que los artículos ya existen en el DOM cuando se ejecuta este listener
+  // console.log( jobsListings );
+
+  // console.log( filterLocationsForm.value ); // esto da el valor de la selección y no el nombre del elemento
   // console.log( event.target.value );
   const selectedValue = filterLocationsForm.value;
+  console.log( selectedValue );
+
 
   jobsListings.forEach( job => {
     // es location o techonology porque es justo lo que tengo después del "data-"
     const jobTechnology = job.dataset.technology; // accedo al atributo data-technology del artículo
-    const jobLocation = job.dataset.location; // accedo al atributo data-location del artículo
+    // const jobLocation = job.dataset.location; // accedo al atributo data-location del artículo
 
 
     // otra forma de recuperar el dataset usando getAttributre -> pero no solo puedes recuperar el data sino cualquier atributo que tenga el elemento, lo único que tienes que hacer es pasarle el nombre del atributo
     // const jobLocation = job.getAttribute( 'data-location' ); // pero hay que el atributo entero
     // si quiero el atributo class
-    // const jobClass = job.getAttribute( 'class' );
+    const jobLocation = job.getAttribute( 'data-location' );
     // la forma "nativa" es la de dataset aunque ambas funcionan igual
 
     /*if ( selectedValue === '' || selectedValue === jobLocation ) {
@@ -121,15 +126,20 @@ fetch( "./data.json" ) // es asíncrono
       // para añadir las clases y data elements al elemento
       article.classList = 'job-listing-card';
 
-      article.dataset.level = job.level;
-      article.dataset.location = job.location;
-      article.dataset.technology = job.technology;
+      // console.log( job );
+
+
+      article.dataset.level = job.data.level;
+      article.dataset.location = job.data.location;
+      article.dataset.technology = job.data.technology;
+
+      // console.log( job.data.location );
 
       // creamos el html interno
       article.innerHTML = `
       <div>
           <h3>${ job.title }</h3>
-          <small>${ job.company } | ${ job.technology }</small>
+          <small>${ job.company } | ${ job.location }</small>
           <p>
             ${ job.description }
           </p>
