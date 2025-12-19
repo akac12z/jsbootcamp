@@ -11,7 +11,7 @@ filterLocationsForm.addEventListener( 'change', ( event ) => {
   // console.log( filterLocationsForm.value ); // esto da el valor de la selección y no el nombre del elemento
   // console.log( event.target.value );
   const selectedValue = filterLocationsForm.value;
-  console.log( selectedValue );
+  // console.log( selectedValue );
 
 
   jobsListings.forEach( job => {
