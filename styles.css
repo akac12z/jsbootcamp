@@ -485,7 +485,8 @@ article {
 	background-color: var(--primary);
 
 	&.isApplied {
-		background: #4caf50;
+		background-color: #4caf50;
+		opacity: 0.75;
 		cursor: not-allowed;
 	}
 }
