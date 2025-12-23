@@ -11,10 +11,9 @@ function App() {
 			<main>
 				<JobSearch />
 
-				<section>
-					<JobListing />
-					<Pagination />
-				</section>
+				<JobListing />
+
+				<Pagination />
 			</main>
 
 			<Footer />

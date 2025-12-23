@@ -4,7 +4,7 @@ import JobCard from "./JobCard";
 
 function JobListing() {
 	return (
-		<>
+		<section>
 			<h2>Resultados de búsqueda</h2>
 
 			<section className="jobs-listings">
@@ -35,7 +35,7 @@ function JobListing() {
 							))*/
 				}
 			</section>
-		</>
+		</section>
 	);
 }
 
