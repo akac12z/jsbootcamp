@@ -1,4 +1,7 @@
-function Pagination() {
+function Pagination({ currentPage, totalPages }) {
+	// generar un array de páginas a mostrar
+	const pages = Array.from({ length: totalPages }, (_, index) => index + 1); // el Array.from da un array con el length que le pasamos sea estricto o dinámico y tiene un segundo parámetro donde está el indice y como quieres que se incilialice es + 1 para que no empiece en 0 en la paginación no tendría sentido
+
 	return (
 		<nav className="pagination">
 			<a href="#">
