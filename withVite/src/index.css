@@ -230,7 +230,6 @@ button {
   &:focus {
 		/* pseudo-clase que significa que el elemento tiene el foco */
 		background-color: var(--primary-hover);
-		outline: 2px solid white;
 		outline-offset: 2px;
 	}
 
@@ -466,7 +465,8 @@ article {
 
 		&:hover,
 		&:focus {
-			background-color: #c5d7f0;
+			border: solid 1px var(--primary);
+			transition: color 0.3s;
 		}
 
 		&:active {
@@ -478,6 +478,24 @@ article {
 			color: rgb(255, 255, 255);
 			pointer-events: none;
 		}
+	}
+	.arrowPagination {
+		color: var(--primary);
+		background: transparent;
+		border: solid 1px var(--primary);
+		padding: 0.5rem 0.5rem;
+		display: flex;
+
+		&:hover {
+			color: #c5d7f0;
+			border-color: #c5d7f0;
+		}
+	}
+	.arrowLeftPagination {
+		margin-right: 1.5rem;
+	}
+	.arrowRightPagination {
+		margin-left: 1.5rem;
 	}
 }
 
