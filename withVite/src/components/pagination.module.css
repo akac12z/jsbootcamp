@@ -40,7 +40,7 @@
     color: var(--primary);
     background: transparent;
     border: solid 1px var(--primary);
-    padding: 0.5rem 0.5rem;
+    padding: 0.3rem 0.3rem;
     display: flex;
   }
   .arrowLeftPagination {

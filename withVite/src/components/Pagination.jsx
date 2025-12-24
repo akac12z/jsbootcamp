@@ -51,8 +51,8 @@ function Pagination({ currentPage = 1, totalPages = 6, onPageChange }) {
 				className={`${styles.arrowPagination} ${styles.arrowLeftPagination}`}
 			>
 				<svg
-					width="16"
-					height="16"
+					width="20"
+					height="20"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
@@ -92,12 +92,12 @@ function Pagination({ currentPage = 1, totalPages = 6, onPageChange }) {
 				onClick={handleNextClick}
 			>
 				<svg
-					width="16"
-					height="16"
+					width="20"
+					height="20"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
-					strokeWidth="1.5"
+					strokeWidth="2"
 					strokeLinecap="round"
 					strokeLinejoin="round"
 					className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
