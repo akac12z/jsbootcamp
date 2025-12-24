@@ -1,3 +1,4 @@
+import styles from "./jobListing.module.css";
 import JobCard from "./JobCard";
 
 function JobListing({ jobsData }) {
@@ -5,7 +6,7 @@ function JobListing({ jobsData }) {
 		<section>
 			<h2>Resultados de búsqueda</h2>
 
-			<section className="jobs-listings">
+			<section className={styles.jobsListings}>
 				{jobsData.map((job) => {
 					const { id, title, company, location, description } = job;
 					// console.log(description);

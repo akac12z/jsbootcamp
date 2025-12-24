@@ -2,6 +2,7 @@
  * LA PAGINACIÓN POR LO GENERAL SE HACE DESDE EL BACKEND, CON UNA API
  * SE HACE EN EL FRONTEND PARA SIMPLIFICAR LA CARGA DE LA PÁGINA CUANDO NO HA FILTROS O TIENES UN NÚMERO LIMITADO DE RESULTADOS
  */
+import styles from "./pagination.module.css";
 
 function Pagination({ currentPage = 1, totalPages = 6, onPageChange }) {
 	// generar un array de páginas a mostrar
@@ -42,12 +43,12 @@ function Pagination({ currentPage = 1, totalPages = 6, onPageChange }) {
 	};
 
 	return (
-		<nav className="pagination">
+		<nav className={styles.pagination}>
 			<a
 				href="#"
 				onClick={handlePrevClick}
 				style={styleLeftPagination}
-				className="arrowPagination arrowLeftPagination"
+				className={`${styles.arrowPagination} ${styles.arrowLeftPagination}`}
 			>
 				<svg
 					width="16"
@@ -75,7 +76,7 @@ function Pagination({ currentPage = 1, totalPages = 6, onPageChange }) {
 						key={page}
 						href="#"
 						onClick={(e) => handleChangePage(e, page)}
-						className={currentPage === page ? "isActive" : ""}
+						className={currentPage === page ? `${styles.isActive}` : ""}
 					>
 						{page}
 					</a>
@@ -86,7 +87,7 @@ function Pagination({ currentPage = 1, totalPages = 6, onPageChange }) {
 
 			<a
 				href="#"
-				className="arrowPagination arrowRightPagination"
+				className={`${styles.arrowPagination} ${styles.arrowRightPagination}`}
 				style={styleRightPagination}
 				onClick={handleNextClick}
 			>

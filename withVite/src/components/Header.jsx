@@ -1,6 +1,8 @@
+import styles from "./header.module.css";
+
 function Header() {
 	return (
-		<header>
+		<header className={styles.header}>
 			<h1>
 				<svg
 					fill="none"
@@ -17,7 +19,7 @@ function Header() {
 				DevJobs
 			</h1>
 
-			<nav>
+			<nav className={styles.forNav}>
 				<a href="/"> Inicio </a>
 				<a href="">Empleos</a>
 			</nav>

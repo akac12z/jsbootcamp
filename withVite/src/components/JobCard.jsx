@@ -1,3 +1,4 @@
+import styles from "./jobCard.module.css";
 import { useState } from "react";
 
 function JobCard({ title, company, location, description }) {
@@ -7,25 +8,24 @@ function JobCard({ title, company, location, description }) {
 		setIsApplied(!isApplied);
 	}
 
-	const text = isApplied ? "Aplicado" : "Aplicar";
-	const buttonClass = isApplied ? "isApplied" : "";
-	const isAppliedText = isApplied ? "Sí" : "No";
+	const btnText = isApplied ? "Aplicado" : "Aplicar";
+	const buttonClass = isApplied ? `${styles.btnApplyJob} ${styles.isApplied}` : styles.btnApplyJob;
 
 	return (
-		<article className="job-listing-card">
+		<article className={styles.jobListingCard}>
 			<div>
 				<h3>{title}</h3>
 				<small>
-					{company} - {location} - ¿He aplicado? {isAppliedText}
+					{company} - {location}
 				</small>
 				<p>{description}</p>
 			</div>
 			<button
-				className={`btn-apply-job ${buttonClass}`}
+				className={buttonClass}
 				onClick={handleClick}
 				disabled={isApplied}
 			>
-				{text}
+				{btnText}
 			</button>
 		</article>
 	);

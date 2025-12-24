@@ -1,6 +1,8 @@
+import styles from "./jobSearch.module.css";
+
 function JobSearch() {
 	return (
-		<section className="jobs-search">
+		<section className={styles.jobsSearch}>
 			<h1>Encuentra tu próximo trabajo</h1>
 			<p>Explora miles de oportunidades en el sector tecnológico.</p>
 
@@ -8,7 +10,7 @@ function JobSearch() {
 				id="job-search-form"
 				role="search"
 			>
-				<div className="search-bar">
+				<div className={styles.searchBar}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -39,7 +41,7 @@ function JobSearch() {
 					/>
 				</div>
 
-				<div className="search-filters">
+				<div className={styles.searchFilters}>
 					<select
 						name="technology"
 						id="filter-technology"
