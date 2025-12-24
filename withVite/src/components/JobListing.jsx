@@ -1,8 +1,6 @@
-import jobsData from "../../../data.json";
-
 import JobCard from "./JobCard";
 
-function JobListing() {
+function JobListing({ jobsData }) {
 	return (
 		<section>
 			<h2>Resultados de búsqueda</h2>
@@ -11,7 +9,9 @@ function JobListing() {
 				{jobsData.map((job) => {
 					const { id, title, company, location, description } = job;
 					// console.log(description);
-
+					// uso el map y no el .forEach porque el map me devuelve un array mientras que el .forEach solo ejecuta una función y no devuelve nada
+					// para React, necesitamos una key porque es un identificador único que ayuda a React a identificar qué elementos cambiaron, se agregaron o se eliminaron
+					// es importante no hacer el key con el índice porque puede que el índice cambie cuando se agregan o eliminan elementos lo que hace que React no pueda identificar correctamente los elementos ya que han cambiado pero el índice no
 					return (
 						<JobCard
 							key={id}

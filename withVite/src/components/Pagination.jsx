@@ -1,3 +1,8 @@
+/**
+ * LA PAGINACIÓN POR LO GENERAL SE HACE DESDE EL BACKEND, CON UNA API
+ * SE HACE EN EL FRONTEND PARA SIMPLIFICAR LA CARGA DE LA PÁGINA CUANDO NO HA FILTROS O TIENES UN NÚMERO LIMITADO DE RESULTADOS
+ */
+
 function Pagination({ currentPage = 1, totalPages = 6, onPageChange }) {
 	// generar un array de páginas a mostrar
 	const pages = Array.from({ length: totalPages }, (_, index) => index + 1); // el Array.from da un array con el length que le pasamos sea estricto o dinámico y tiene un segundo parámetro donde está el indice y como quieres que se incilialice es + 1 para que no empiece en 0 en la paginación no tendría sentido
@@ -64,8 +69,10 @@ function Pagination({ currentPage = 1, totalPages = 6, onPageChange }) {
 			</a>
 
 			{pages.map((page) => {
+				
 				return (
 					<a
+						key={page}
 						href="#"
 						onClick={(e) => handleChangePage(e, page)}
 						className={currentPage === page ? "isActive" : ""}
