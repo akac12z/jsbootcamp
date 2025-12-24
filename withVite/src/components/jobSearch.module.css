@@ -36,3 +36,28 @@
     padding: 0;
   }
 }
+
+.submitBtn {
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1rem;
+  width: 200px;
+}
+
+.resetBtn {
+  color: white;
+  background-color: transparent;
+  border: 1px solid red;
+  padding: 0.25rem 0.5rem;
+  &:hover,
+  &:focus {
+    color: red;
+    background: transparent;
+  }
+}
+
+.onFocusInput {
+  border: 1px solid var(--primary);
+  color: red;
+}
