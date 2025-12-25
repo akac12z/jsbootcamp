@@ -1,63 +1,63 @@
 .jobsSearch {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0;
-  height: auto;
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 0;
+	height: auto;
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.25rem;
-  }
-  p {
-    font-size: 1.25rem;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-  }
+	h1 {
+		font-size: 2.5rem;
+		margin-bottom: 0.25rem;
+	}
+	p {
+		font-size: 1.25rem;
+		color: var(--text-muted);
+		margin-bottom: 1.5rem;
+	}
 
-  .searchBar {
-    background: var(--input-bg);
-    padding: 0.32rem 0.5rem;
-  }
+	.searchBar {
+		background: var(--input-bg);
+		padding: 0.32rem 0.5rem;
+		margin-bottom: 1rem;
+	}
 
-  .searchFilters {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
-  }
+	.searchFilters {
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: 0.5rem;
+	}
 
-  form {
-    width: 90%;
-    max-width: 1200px;
-  }
+	form {
+		width: 90%;
+		max-width: 1200px;
+	}
 
-  form div {
-    background: none;
-    box-shadow: none;
-    padding: 0;
-  }
+	form div {
+		background: none;
+		box-shadow: none;
+		padding: 0;
+	}
 }
 
 .submitBtn {
-  background-color: var(--primary);
-  color: var(--white);
-  border: none;
-  padding: 0.5rem 1rem;
-  width: 200px;
+	background-color: var(--primary);
+	color: var(--white);
+	border: none;
+	padding: 0.5rem 1rem;
+	width: 200px;
 }
 
 .resetBtn {
-  color: white;
-  background-color: transparent;
-  border: 1px solid red;
-  padding: 0.25rem 0.5rem;
-  &:hover,
-  &:focus {
-    color: red;
-    background: transparent;
-  }
+	color: white;
+	background-color: transparent;
+	border: 1px solid red;
+	padding: 0.25rem 0.5rem;
+	&:hover,
+	&:focus {
+		color: red;
+		background: transparent;
+	}
 }
 
-.onFocusInput {
-  border: 1px solid var(--primary);
-  color: red;
+.onFocus {
+	border: 1px solid var(--primary);
 }

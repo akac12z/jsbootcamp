@@ -1,7 +1,7 @@
 import styles from "./jobSearch.module.css";
 import { useId } from "react";
 
-function JobSearch({onSearch, onTextFilter}) {
+function JobSearch({ onSearch, onTextFilter }) {
 	const idText = useId();
 	const idTech = useId();
 	const idLocation = useId();
@@ -12,10 +12,9 @@ function JobSearch({onSearch, onTextFilter}) {
 	// 2. Usando el evento onChange del input que es el que maneja en "real time" el input de la búsqueda
 
 	const handleSubmit = (e) => {
-		
 		e.preventDefault();
 		// los useId crean un id único para cada elemento y dentro de los name del form, tener un magic string es algo que no es recomendable, es muy débil
-		
+
 		// recuperamos la información de los filtros
 		const formData = new FormData(e.target); // esto devuelve todos los datos que tiene el form
 		const filters = {
@@ -24,13 +23,13 @@ function JobSearch({onSearch, onTextFilter}) {
 			technology: formData.get(idTech),
 			location: formData.get(idLocation),
 			experience: formData.get(idExperience),
-		}
-		
-		onSearch(filters); // esta sería la forma de aplicar los filtros que sería una propiedad que 
+		};
+
+		onSearch(filters); // esta sería la forma de aplicar los filtros que sería una propiedad que
 		// viene de las props de la App
 		onTextFilter(filters.search);
-	}
-	
+	};
+
 	// const handleTextChange = (e) => {
 	// 	// maneja cuando cambia el texto de la búsqueda en real time
 	// 	const text = e.target.value;
@@ -41,13 +40,17 @@ function JobSearch({onSearch, onTextFilter}) {
 	const handleReset = () => {
 		onSearch({});
 		onTextFilter("");
-	}
+	};
 
-	const handleFocus = (x) => {
-		console.log("focus");
-		x.style.background = "#333";
-	}
-	
+	const handleFocus = () => {
+		const drawForm = document.querySelector(".hd");
+		drawForm.classList.add(styles.onFocus);
+	};
+	const handleBlur = () => {
+		const drawForm = document.querySelector(".hd");
+		drawForm.classList.remove(styles.onFocus);
+	};
+
 	return (
 		<section className={styles.jobsSearch}>
 			<h1>Encuentra tu próximo trabajo</h1>
@@ -58,7 +61,7 @@ function JobSearch({onSearch, onTextFilter}) {
 				id="job-search-form"
 				role="search"
 			>
-				<div className={styles.searchBar}>
+				<div className={`hd ${styles.searchBar}`}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -81,12 +84,11 @@ function JobSearch({onSearch, onTextFilter}) {
 					</svg>
 
 					<input
+						onFocus={handleFocus}
+						onBlur={handleBlur}
 						// onChange={handleTextChange}
 						name={idText}
-
-						onFocus={handleFocus}
 						id="job-search-input"
-						className={styles.onFocusInput}
 						// required // hago esto no required porque al hacer la tarea toda con el submit, si lo dejo required y uso los filtros, me obliga a tener que poner algo en el text y quiero poder poner o no, text
 						type="text"
 						placeholder="Buscar trabajos, empresas o habilidades"
@@ -138,8 +140,19 @@ function JobSearch({onSearch, onTextFilter}) {
 						<option value="senior">Senior</option>
 						<option value="lead">Lead</option>
 					</select>
-					<button className={styles.submitBtn} type="submit">Buscar</button>
-					<button onReset={handleReset} className={styles.resetBtn} type="reset">Reset</button>
+					<button
+						className={styles.submitBtn}
+						type="submit"
+					>
+						Buscar
+					</button>
+					<button
+						onReset={handleReset}
+						className={styles.resetBtn}
+						type="reset"
+					>
+						Reset
+					</button>
 				</div>
 			</form>
 
