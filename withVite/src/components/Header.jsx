@@ -21,7 +21,7 @@ function Header() {
 
 			<nav className={styles.forNav}>
 				<a href="/"> Inicio </a>
-				<a href="">Empleos</a>
+				<a href="/search">Empleos</a>
 			</nav>
 		</header>
 	);
