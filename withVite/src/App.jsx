@@ -1,23 +1,20 @@
-import { useRouter } from "./hooks/useRouter";
-
+import { Router } from "./components/router/Router";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { HomePage } from "./pages/Home";
-import { SearchPage } from "./pages/Search";
-import { NotFoundPage } from "./pages/404";
+import { allPages } from "./utils/pages";
 
 function App() {
-	const { currentPath } = useRouter();
-
 	// // necesito poder saber en qué path estoy para poder moverme entre páginas
 	// const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
-	let page = <NotFoundPage />;
-	if (currentPath === "/") {
-		page = <HomePage />;
-	} else if (currentPath === "/search") {
-		page = <SearchPage />;
-	}
+	// comento esto porque está hardcodeado y teniendo el Route puedes usarlo de manera dinámica
+	// const { currentPath } = useRouter();
+	// let page = <NotFoundPage />;
+	// if (currentPath === "/") {
+	// 	page = <HomePage />;
+	// } else if (currentPath === "/search") {
+	// 	page = <SearchPage />;
+	// }
 
 	// // este use effect se crea para que cada vez que cambie la url, actualice el estado y poder navegar entre las páginas simulando una SPA (single page application) y así no recargar todos los recursos cada vez que cambia de pag el user
 	// useEffect(() => {
@@ -39,7 +36,16 @@ function App() {
 	return (
 		<>
 			<Header />
-			{page}
+			{allPages.map((page) => {
+				const { key, path, component } = page;
+				return (
+					<Router
+						key={key}
+						path={path}
+						component={component}
+					/>
+				);
+			})}
 			<Footer />
 		</>
 	);
