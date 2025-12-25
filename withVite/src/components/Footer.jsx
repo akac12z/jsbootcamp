@@ -1,6 +1,8 @@
+import styles from "./footer.modules.css";
+
 function Footer() {
 	return (
-		<footer>
+		<footer className={styles.footerClasses}>
 			<small>&copy; 2025 DevJobs. Todos los derechos reservados.</small>
 		</footer>
 	);
