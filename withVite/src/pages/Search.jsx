@@ -86,6 +86,23 @@ export function SearchPage() {
 		setCurrentPage(1); // cuando se aplica el filtro se vuelve a la página 1 porque no tiene sentido mantener en la página ya que puede ser que no hayan mas páginas
 	};
 
+	// los efectos, como mínimo se ejecutan una vez cuando se monta el componente (si la condición está vacia, se ejecuta una vez) y depués a travñes de la condición del array se modificará -> es como un do-while loop
+	// los efectos se usan para hacer peticiones a una API sin dependencias
+	// useEffect(() => {
+	// 	console.log("hellos");
+	// }, [jobFilterByFilters])
+	// useEffect(() => {
+	// 	const handleResize = () => {
+	// 		console.log('resize');
+	// 	}
+	// 	window.addEventListener('resize', handleResize)
+
+	// 	// los efectos pueden tener return para 'limpiar' el efecto que se ha ejecutado
+	// 	return () => {
+	// 		window.removeEventListener('resize', handleResize)
+	// 	}
+	// }, []) // si no hay nada, solo se ejecuta una vez
+
 	return (
 		<>
 			<main>
