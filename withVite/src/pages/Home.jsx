@@ -3,7 +3,7 @@ export function HomePage() {
 		<main>
 			<section>
 				<img
-					src="./background.webp"
+					src="../../public/background.webp"
 					alt="dev coding"
 					width="200"
 				/>
