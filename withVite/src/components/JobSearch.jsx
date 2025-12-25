@@ -13,10 +13,17 @@ function JobSearch({ onSearch, onTextFilter }) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		// console.log(e);
+
 		// los useId crean un id único para cada elemento y dentro de los name del form, tener un magic string es algo que no es recomendable, es muy débil
+		// console.log(e.target);
 
 		// recuperamos la información de los filtros
-		const formData = new FormData(e.target); // esto devuelve todos los datos que tiene el form
+		// hya diferencia entre el e.target y el e.currentTarget. el e.target es el elemento que está recibiendo el evento y el e.currentTarget es el elemento que está escuchando el evento por tanto, para hacerlo real time el que te interesa es el e.currentTaget para que no te salte el error de no hay un elemento del estilo HTMLInputElement en el target
+		//! el e.target es el input y el e.currentTarget es el form y como estamos escuchando el evento del formulario y no del input (ese es el del text) te interesa el e.currentTarget
+		const formData = new FormData(e.currentTarget); // esto devuelve todos los datos que tiene el form
+		// console.log(formData);
+
 		const filters = {
 			// cons los filters estoy creando un objeto con los datos que vienen del form cada uno con su id que sería el name del select
 			search: formData.get(idText),
@@ -24,30 +31,28 @@ function JobSearch({ onSearch, onTextFilter }) {
 			location: formData.get(idLocation),
 			experience: formData.get(idExperience),
 		};
-
 		onSearch(filters); // esta sería la forma de aplicar los filtros que sería una propiedad que
 		// viene de las props de la App
 		onTextFilter(filters.search);
 	};
 
-	// const handleTextChange = (e) => {
-	// 	// maneja cuando cambia el texto de la búsqueda en real time
-	// 	const text = e.target.value;
-	// 	onTextFilter(text);
-	// 	// console.log(text);
-	// }
-
-	const handleReset = () => {
-		onSearch({});
-		onTextFilter("");
+	const handleChanegeText = (e) => {
+		// 	// maneja cuando cambia el texto de la búsqueda en real time gracias al evento onChange del input
+		const text = e.target.value;
+		onTextFilter(text);
 	};
 
+	// const handleReset = () => {
+	// 	onSearch({});
+	// 	onTextFilter("");
+	// };
+
 	const handleFocus = () => {
-		const drawForm = document.querySelector(".hd");
+		const drawForm = document.querySelector(".onFocusClass");
 		drawForm.classList.add(styles.onFocus);
 	};
 	const handleBlur = () => {
-		const drawForm = document.querySelector(".hd");
+		const drawForm = document.querySelector(".onFocusClass");
 		drawForm.classList.remove(styles.onFocus);
 	};
 
@@ -57,11 +62,12 @@ function JobSearch({ onSearch, onTextFilter }) {
 			<p>Explora miles de oportunidades en el sector tecnológico.</p>
 
 			<form
+				onChange={handleSubmit}
 				onSubmit={handleSubmit}
 				id="job-search-form"
 				role="search"
 			>
-				<div className={`hd ${styles.searchBar}`}>
+				<div className={`onFocusClass ${styles.searchBar}`}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -86,7 +92,7 @@ function JobSearch({ onSearch, onTextFilter }) {
 					<input
 						onFocus={handleFocus}
 						onBlur={handleBlur}
-						// onChange={handleTextChange}
+						onChange={handleChanegeText}
 						name={idText}
 						id="job-search-input"
 						// required // hago esto no required porque al hacer la tarea toda con el submit, si lo dejo required y uso los filtros, me obliga a tener que poner algo en el text y quiero poder poner o no, text
@@ -106,9 +112,9 @@ function JobSearch({ onSearch, onTextFilter }) {
 							<option value="python">Python</option>
 							<option value="react">React</option>
 							<option value="nodejs">Node.js</option>
+							<option value="java">Java</option>
 						</optgroup>
 						<optgroup label="Otras tecnologías">
-							<option value="java">Java</option>
 							<option value="csharp">C#</option>
 							<option value="c">C</option>
 							<option value="c++">C++</option>
@@ -140,7 +146,7 @@ function JobSearch({ onSearch, onTextFilter }) {
 						<option value="senior">Senior</option>
 						<option value="lead">Lead</option>
 					</select>
-					<button
+					{/* <button
 						className={styles.submitBtn}
 						type="submit"
 					>
@@ -152,7 +158,7 @@ function JobSearch({ onSearch, onTextFilter }) {
 						type="reset"
 					>
 						Reset
-					</button>
+					</button> */}
 				</div>
 			</form>
 
