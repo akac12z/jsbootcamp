@@ -1,7 +1,7 @@
+import { allPages } from "./utils/pages";
 import { Router } from "./components/router/Router";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { allPages } from "./utils/pages";
 
 function App() {
 	// // necesito poder saber en qué path estoy para poder moverme entre páginas
@@ -38,6 +38,7 @@ function App() {
 			<Header />
 			{allPages.map((page) => {
 				const { key, path, component } = page;
+
 				return (
 					<Router
 						key={key}

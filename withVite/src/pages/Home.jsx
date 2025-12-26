@@ -2,8 +2,8 @@ import { useId } from "react";
 import { useRouter } from "../hooks/useRouter";
 
 export function HomePage() {
-	const isSearch = useId()
-	const { navigateTo } = useRouter()
+	const isSearch = useId();
+	const { navigateTo } = useRouter();
 
 	const handleSearch = (e) => {
 		e.preventDefault();
@@ -12,9 +12,9 @@ export function HomePage() {
 		// console.log(searchTerm);
 		const url = searchTerm
 			? `/search?query=${encodeURIComponent(searchTerm)}` // el encodeURIComponent() es para que el searchTerm no tenga caracteres especiales que puedan causar problemas y los codifique de manera que no haya pérdida de datos como son los espacios
-			: '/search';
-		navigateTo(url) // navegamos a la url que corresponde (en este caso es el search hardcodeado) y le añadimso al path el query que el usuario puso
-	}
+			: "/search";
+		navigateTo(url); // navegamos a la url que corresponde (en este caso es el search hardcodeado) y le añadimso al path el query que el usuario puso
+	};
 	return (
 		<main>
 			<section>
@@ -29,7 +29,10 @@ export function HomePage() {
 					Explora las mejores ofertas laborales en el sector tecnológico y da el
 					siguiente paso en tu carrera profesional.
 				</p>
-				<form role="search" onSubmit={handleSearch}>
+				<form
+					role="search"
+					onSubmit={handleSearch}
+				>
 					<div>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
