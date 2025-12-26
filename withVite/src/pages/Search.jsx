@@ -1,4 +1,4 @@
-import {useEffect, useState } from "react";
+import { useState } from "react";
 
 import jobsData from "../../../data.json";
 
@@ -108,7 +108,7 @@ export function SearchPage() {
 			<main>
 				<JobSearch
 					onSearch={handleSearch}
-					onTextFilter={handleTextFilter}
+					onFilter={handleTextFilter}
 				/>
 
 				<section>

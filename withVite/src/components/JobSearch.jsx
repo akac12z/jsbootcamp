@@ -1,60 +1,72 @@
 import styles from "./jobSearch.module.css";
 import { useId } from "react";
+import { useSearchForm } from "../hooks/useSearchForm";
 
-function JobSearch({ onSearch, onTextFilter }) {
+function JobSearch({ onSearch, onFilter }) {
 	const idText = useId();
 	const idTech = useId();
 	const idLocation = useId();
 	const idExperience = useId();
 
+	const { handleTextChange, handleSubmit, handleFocus, handleBlur } =
+		useSearchForm({
+			idExperience,
+			idLocation,
+			idTech,
+			idText,
+			onSearch,
+			onFilter,
+			styles,
+		});
+
 	// 2 formas distintas de manejar el submit
 	// 1. Usando el evento onSubmit del form qeu es darle al botón una vez escrito y usado el filtro
 	// 2. Usando el evento onChange del input que es el que maneja en "real time" el input de la búsqueda
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		// console.log(e);
+	// const handleSubmit = (e) => {
+	// 	e.preventDefault();
+	// 	// console.log(e);
 
-		// los useId crean un id único para cada elemento y dentro de los name del form, tener un magic string es algo que no es recomendable, es muy débil
-		// console.log(e.target);
+	// 	// los useId crean un id único para cada elemento y dentro de los name del form, tener un magic string es algo que no es recomendable, es muy débil
+	// 	// console.log(e.target);
 
-		// recuperamos la información de los filtros
-		// hya diferencia entre el e.target y el e.currentTarget. el e.target es el elemento que está recibiendo el evento y el e.currentTarget es el elemento que está escuchando el evento por tanto, para hacerlo real time el que te interesa es el e.currentTaget para que no te salte el error de no hay un elemento del estilo HTMLInputElement en el target
-		//! el e.target es el input y el e.currentTarget es el form y como estamos escuchando el evento del formulario y no del input (ese es el del text) te interesa el e.currentTarget
-		const formData = new FormData(e.currentTarget); // esto devuelve todos los datos que tiene el form
-		// console.log(formData);
+	// 	// recuperamos la información de los filtros
+	// 	// hya diferencia entre el e.target y el e.currentTarget. el e.target es el elemento que está recibiendo el evento y el e.currentTarget es el elemento que está escuchando el evento por tanto, para hacerlo real time el que te interesa es el e.currentTaget para que no te salte el error de no hay un elemento del estilo HTMLInputElement en el target
+	// 	//! el e.target es el input y el e.currentTarget es el form y como estamos escuchando el evento del formulario y no del input (ese es el del text) te interesa el e.currentTarget
+	// 	const formData = new FormData(e.currentTarget); // esto devuelve todos los datos que tiene el form
+	// 	// console.log(formData);
 
-		const filters = {
-			// cons los filters estoy creando un objeto con los datos que vienen del form cada uno con su id que sería el name del select
-			search: formData.get(idText),
-			technology: formData.get(idTech),
-			location: formData.get(idLocation),
-			experience: formData.get(idExperience),
-		};
-		onSearch(filters); // esta sería la forma de aplicar los filtros que sería una propiedad que
-		// viene de las props de la App
-		onTextFilter(filters.search);
-	};
-
-	const handleChanegeText = (e) => {
-		// 	// maneja cuando cambia el texto de la búsqueda en real time gracias al evento onChange del input
-		const text = e.target.value;
-		onTextFilter(text);
-	};
-
-	// const handleReset = () => {
-	// 	onSearch({});
-	// 	onTextFilter("");
+	// 	const filters = {
+	// 		// cons los filters estoy creando un objeto con los datos que vienen del form cada uno con su id que sería el name del select
+	// 		search: formData.get(idText),
+	// 		technology: formData.get(idTech),
+	// 		location: formData.get(idLocation),
+	// 		experience: formData.get(idExperience),
+	// 	};
+	// 	onSearch(filters); // esta sería la forma de aplicar los filtros que sería una propiedad que
+	// 	// viene de las props de la App
+	// 	onFilter(filters.search);
 	// };
 
-	const handleFocus = () => {
-		const drawForm = document.querySelector(".onFocusClass");
-		drawForm.classList.add(styles.onFocus);
-	};
-	const handleBlur = () => {
-		const drawForm = document.querySelector(".onFocusClass");
-		drawForm.classList.remove(styles.onFocus);
-	};
+	// const handleChanegeText = (e) => {
+	// 	// 	// maneja cuando cambia el texto de la búsqueda en real time gracias al evento onChange del input
+	// 	const text = e.target.value;
+	// 	onFilter(text);
+	// };
+
+	// // const handleReset = () => {
+	// // 	onSearch({});
+	// // 	onFilter("");
+	// // };
+
+	// const handleFocus = () => {
+	// 	const drawForm = document.querySelector(".onFocusClass");
+	// 	drawForm.classList.add(styles.onFocus);
+	// };
+	// const handleBlur = () => {
+	// 	const drawForm = document.querySelector(".onFocusClass");
+	// 	drawForm.classList.remove(styles.onFocus);
+	// };
 
 	return (
 		<section className={styles.jobsSearch}>
@@ -63,7 +75,7 @@ function JobSearch({ onSearch, onTextFilter }) {
 
 			<form
 				onChange={handleSubmit}
-				onSubmit={handleSubmit}
+				// onSubmit={handleSubmit}
 				id="job-search-form"
 				role="search"
 			>
@@ -92,7 +104,7 @@ function JobSearch({ onSearch, onTextFilter }) {
 					<input
 						onFocus={handleFocus}
 						onBlur={handleBlur}
-						onChange={handleChanegeText}
+						onChange={handleTextChange}
 						name={idText}
 						id="job-search-input"
 						// required // hago esto no required porque al hacer la tarea toda con el submit, si lo dejo required y uso los filtros, me obliga a tener que poner algo en el text y quiero poder poner o no, text
