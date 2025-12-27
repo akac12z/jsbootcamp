@@ -1,4 +1,4 @@
-import { allPages } from "./utils/pages";
+import { allPages } from "./global/pages";
 import { Router } from "./components/router/Router";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
