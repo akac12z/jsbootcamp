@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import jobsData from "../../../data.json";
 
 const MAX_RESULT_PER_PAGE = 5;
 const FIRST_PAGE_RESULT = 1;
 const FIRST_TEXT_FILTER = "";
+const FIRST_JOBS = [];
+const FIRST_TOTAL_JOBS = 0;
+const IS_LOADING = true;
+const apiRUL = "https://jscamp-api.vercel.app/api/jobs";
 
 export function useFilters() {
 	const [filters, setFilters] = useState({
@@ -15,6 +19,12 @@ export function useFilters() {
 
 	const [textToFilter, setTextToFilter] = useState(FIRST_TEXT_FILTER);
 	const [currentPage, setCurrentPage] = useState(FIRST_PAGE_RESULT);
+	const [jobs, setJobs] = useState(FIRST_JOBS); // este primer estado es un problema porque no está teniendo nada y al hacer el primer .map no puede recuperar nada del undefined. por esto creo el total y setTotal
+	const [total, setTotal] = useState(FIRST_TOTAL_JOBS);
+	const [loading, setLoading] = useState(IS_LOADING);
+
+	/*LOS FILTROS DEBERÍAN HACERSE EN EL BACKEND, POR ENDE, DE AQUÍ LOS VAMOS A COMENTAR*/
+	/*
 
 	// esta es par ala búsqueda por filtro
 	const jobFilterByFilters = jobsData.filter((job) => {
@@ -55,18 +65,38 @@ export function useFilters() {
 						job.description.toLowerCase().includes(textToFilter?.toLowerCase())
 			  ); // si no, filtra por el texto y a través del título hace match con el texto que se escribe
 
-	const totalPages = Math.ceil(
-		jobFilterByTextFilter.length / MAX_RESULT_PER_PAGE
-	); // como estoy filtrando los resultados, el total de páginas se va a ir cambiando y por ende, la paginación y esta dependerá de la cantidad de resultados que tenga y el MAX_RESULT_PER_PAGE
+				
+				// const totalPages = Math.ceil(jobsData.length / MAX_RESULT_PER_PAGE); // redondea hacia arriba
+				// const totalPages = Math.floor(jobsData.length / MAX_RESULT_PER_PAGE); // redondea hacia abajo
+				
+				const pageResults = jobFilterByTextFilter.slice(
+					(currentPage - 1) * MAX_RESULT_PER_PAGE, // esto es para que la página 1 sea la primera que es el primer elemento del array
+					currentPage * MAX_RESULT_PER_PAGE
+					); // esto es para que la página 2 sea la segunda que es el segundo elemento del array y cada vez que cambie de página se vayan sumando 5. del 0 al 5 resultados, del 5 al 10 resultados, del 10 al 15 resultados, etc
+					
+	*/
 
-	// const totalPages = Math.ceil(jobsData.length / MAX_RESULT_PER_PAGE); // redondea hacia arriba
-	// const totalPages = Math.floor(jobsData.length / MAX_RESULT_PER_PAGE); // redondea hacia abajo
+	// en componentes de react, el fetch de datos tienes que hacerlos dentro de un useEffecr
+	useEffect(() => {
+		async function fetchJobs() {
+			try {
+				setLoading(true);
+				const response = await fetch(apiRUL);
+				const json = await response.json();
+				console.log(json);
 
-	const pageResults = jobFilterByTextFilter.slice(
-		(currentPage - 1) * MAX_RESULT_PER_PAGE, // esto es para que la página 1 sea la primera que es el primer elemento del array
-		currentPage * MAX_RESULT_PER_PAGE
-	); // esto es para que la página 2 sea la segunda que es el segundo elemento del array y cada vez que cambie de página se vayan sumando 5. del 0 al 5 resultados, del 5 al 10 resultados, del 10 al 15 resultados, etc
+				setJobs(json.data); // guardamos el array de la data de la api
+				setTotal(json.total); // devuelvo el total de los results
+			} catch (error) {
+				console.error("Error al recuperar los datos");
+				setLoading(false);
+			}
+		}
 
+		fetchJobs();
+	}, []); // está vacio porque quiero que se renderice nada más entrar en el componente
+
+	const totalPages = Math.ceil(total / MAX_RESULT_PER_PAGE); // como estoy filtrando los resultados, el total de páginas se va a ir cambiando y por ende, la paginación y esta dependerá de la cantidad de resultados que tenga y el MAX_RESULT_PER_PAGE
 	const handlePageChange = (page) => {
 		// console.log("Page changed to:", page);
 		setCurrentPage(page);
@@ -88,7 +118,9 @@ export function useFilters() {
 		handlePageChange,
 		handleSearch,
 		handleTextFilter,
-		pageResults,
+		jobs,
+		total,
+		loading,
 		totalPages,
 		currentPage,
 	};

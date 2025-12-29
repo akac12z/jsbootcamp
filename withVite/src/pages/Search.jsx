@@ -1,21 +1,20 @@
+import { useEffect } from "react";
 import { useFilters } from "../hooks/useFilters";
-
-import jobsData from "../../../data.json";
 
 import JobSearch from "../components/JobSearch";
 import Pagination from "../components/Pagination";
 import JobListing from "../components/JobListing";
-
-const MAX_RESULT_PER_PAGE = 5;
 
 export function SearchPage() {
 	const {
 		handlePageChange,
 		handleSearch,
 		handleTextFilter,
-		pageResults,
 		totalPages,
 		currentPage,
+		jobs,
+		total,
+		loading,
 	} = useFilters();
 	// const [filters, setFilters] = useState({
 	// 	technology: "",
@@ -111,6 +110,12 @@ export function SearchPage() {
 	// 	}
 	// }, []) // si no hay nada, solo se ejecuta una vez
 
+	useEffect(() => {
+		// para cambiar el título de forma dinámica
+		document.title = `Resultados: ${total}, Página ${currentPage} de ${totalPages}`;
+	}, [total, currentPage]);
+	console.log(loading);
+
 	return (
 		<>
 			<main>
@@ -120,7 +125,7 @@ export function SearchPage() {
 				/>
 
 				<section>
-					<JobListing jobsData={pageResults} />
+					<JobListing jobsData={jobs} />
 
 					<Pagination
 						currentPage={currentPage}

@@ -8,7 +8,8 @@ function JobListing({ jobsData }) {
 
 			<section className={styles.jobsListings}>
 				{jobsData.map((job) => {
-					const { id, title, company, location, description } = job;
+					// const { id, title, company, location, description } = job;
+					const { id, titulo, empresa, ubicacion, descripcion } = job; // lo tengo que cambiar a español porque el backend está en español
 					// console.log(description);
 					// uso el map y no el .forEach porque el map me devuelve un array mientras que el .forEach solo ejecuta una función y no devuelve nada
 					// para React, necesitamos una key porque es un identificador único que ayuda a React a identificar qué elementos cambiaron, se agregaron o se eliminaron
@@ -16,10 +17,10 @@ function JobListing({ jobsData }) {
 					return (
 						<JobCard
 							key={id}
-							title={title}
-							company={company}
-							location={location}
-							description={description}
+							title={titulo}
+							company={empresa}
+							location={ubicacion}
+							description={descripcion}
 						/>
 					);
 				})}
