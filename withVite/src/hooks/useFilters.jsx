@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import jobsData from "../../../data.json";
+// import jobsData from "../../../data.json";
 
 const MAX_RESULT_PER_PAGE = 5;
 const FIRST_PAGE_RESULT = 1;
@@ -9,19 +9,26 @@ const FIRST_JOBS = [];
 const FIRST_TOTAL_JOBS = 0;
 const IS_LOADING = true;
 const apiRUL = "https://jscamp-api.vercel.app/api/jobs";
+const VOID_FILTERS = { technology: "", location: "", experience: "" };
 
 export function useFilters() {
-	const [filters, setFilters] = useState({
-		technology: "",
-		location: "",
-		experience: "",
-	});
+	const [filters, setFilters] = useState(VOID_FILTERS);
 
 	const [textToFilter, setTextToFilter] = useState(FIRST_TEXT_FILTER);
 	const [currentPage, setCurrentPage] = useState(FIRST_PAGE_RESULT);
 	const [jobs, setJobs] = useState(FIRST_JOBS); // este primer estado es un problema porque no está teniendo nada y al hacer el primer .map no puede recuperar nada del undefined. por esto creo el total y setTotal
 	const [total, setTotal] = useState(FIRST_TOTAL_JOBS);
 	const [loading, setLoading] = useState(IS_LOADING);
+
+	// tarea: crear un btn para eliminar los filtros
+
+	const hasActiveFilters =
+		filters.technology || filters.location || filters.experience;
+	console.log({ "has filters?": hasActiveFilters });
+
+	const handleResetFilters = () => {
+		if (hasActiveFilters !== VOID_FILTERS) setFilters(VOID_FILTERS);
+	};
 
 	/*LOS FILTROS DEBERÍAN HACERSE EN EL BACKEND, POR ENDE, DE AQUÍ LOS VAMOS A COMENTAR*/
 	/*
@@ -85,7 +92,7 @@ export function useFilters() {
 				const params = new URLSearchParams(); // para obtener y crear los params en la url
 				if (filters.technology) params.append("technology", filters.technology);
 				if (filters.location) params.append("location", filters.location);
-				if (filters.experience) params.append("experience", filters.location);
+				if (filters.experience) params.append("experience", filters.experience);
 				if (textToFilter) params.append("text", textToFilter);
 
 				// y para mostrar el offset y el page limit necesitas los siguientes cálculos
@@ -96,8 +103,10 @@ export function useFilters() {
 				const queryParams = params.toString(); // para pasar los parámetros que tengo en params
 
 				const response = await fetch(apiRUL + `?${queryParams}`);
+				console.log(response);
+
 				const json = await response.json();
-				console.log(json);
+				// console.log(json);
 
 				setJobs(json.data); // guardamos el array de la data de la api
 				setTotal(json.total); // devuelvo el total de los results
@@ -132,6 +141,7 @@ export function useFilters() {
 		handlePageChange,
 		handleSearch,
 		handleTextFilter,
+		handleResetFilters,
 		jobs,
 		total,
 		loading,

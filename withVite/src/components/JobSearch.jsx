@@ -1,6 +1,7 @@
 import styles from "./jobSearch.module.css";
 import { useId } from "react";
 import { useSearchForm } from "../hooks/useSearchForm";
+import { useFilters } from "../hooks/useFilters";
 
 function JobSearch({ onSearch, onFilter }) {
 	const idText = useId();
@@ -18,6 +19,7 @@ function JobSearch({ onSearch, onFilter }) {
 			onFilter,
 			styles,
 		});
+	const { handleResetFilters } = useFilters();
 
 	// 2 formas distintas de manejar el submit
 	// 1. Usando el evento onSubmit del form qeu es darle al botón una vez escrito y usado el filtro
@@ -164,13 +166,15 @@ function JobSearch({ onSearch, onFilter }) {
 					>
 						Buscar
 					</button>
+					*/}
+					{}
 					<button
-						onReset={handleReset}
+						onClick={handleResetFilters}
 						className={styles.resetBtn}
 						type="reset"
 					>
-						Reset
-					</button> */}
+						Eliminar Filtros
+					</button>
 				</div>
 			</form>
 

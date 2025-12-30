@@ -10,11 +10,11 @@ export function SearchPage() {
 		handlePageChange,
 		handleSearch,
 		handleTextFilter,
+		handleResetFilters,
 		totalPages,
 		currentPage,
 		jobs,
 		total,
-		loading,
 	} = useFilters();
 	// const [filters, setFilters] = useState({
 	// 	technology: "",
@@ -114,7 +114,7 @@ export function SearchPage() {
 		// para cambiar el título de forma dinámica
 		document.title = `Resultados: ${total}, Página ${currentPage} de ${totalPages}`;
 	}, [total, currentPage]);
-	console.log(loading);
+	// console.log(loading);
 
 	return (
 		<>
