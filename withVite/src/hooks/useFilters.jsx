@@ -81,7 +81,16 @@ export function useFilters() {
 		async function fetchJobs() {
 			try {
 				setLoading(true);
-				const response = await fetch(apiRUL);
+				// para que la funcionalidad de filers a través del fetch funcione, tienes que tener primero la llamado a los filtros y leerlos y estos pasárselo a la url
+				const params = new URLSearchParams(); // para obtener y crear los params en la url
+				if (filters.technology) params.append("technology", filters.technology);
+				if (filters.location) params.append("location", filters.location);
+				if (filters.experience) params.append("experience", filters.location);
+				if (textToFilter) params.append("text", textToFilter);
+
+				const queryParams = params.toString(); // para pasar los parámetros que tengo en params
+
+				const response = await fetch(apiRUL + `?${queryParams}`);
 				const json = await response.json();
 				console.log(json);
 
@@ -94,7 +103,7 @@ export function useFilters() {
 		}
 
 		fetchJobs();
-	}, []); // está vacio porque quiero que se renderice nada más entrar en el componente
+	}, [filters, textToFilter, currentPage]); // si esto está vacío, solo se renderizará una vez, y es útil si no quieres interactividad pero si necesitas que se refresque la llamada a la api cada vez que un filtro se modifica, necesitas decirle qué tiene que estar observando para que cuando cambie, hacer la llamada
 
 	const totalPages = Math.ceil(total / MAX_RESULT_PER_PAGE); // como estoy filtrando los resultados, el total de páginas se va a ir cambiando y por ende, la paginación y esta dependerá de la cantidad de resultados que tenga y el MAX_RESULT_PER_PAGE
 	const handlePageChange = (page) => {
