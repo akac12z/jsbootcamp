@@ -88,6 +88,11 @@ export function useFilters() {
 				if (filters.experience) params.append("experience", filters.location);
 				if (textToFilter) params.append("text", textToFilter);
 
+				// y para mostrar el offset y el page limit necesitas los siguientes cálculos
+				const offset = (currentPage - 1) * MAX_RESULT_PER_PAGE; // calculamos la cantidad de resultados que quieres "saltarte" -> en la primera página 0, en la segunda quieres los MAX_RESULT... primeros y así sucesavamente
+				params.append("limit", MAX_RESULT_PER_PAGE); // crear un param que te diga cuántos resultados por búsqueda
+				params.append("offset", offset); // mandamos el offset
+
 				const queryParams = params.toString(); // para pasar los parámetros que tengo en params
 
 				const response = await fetch(apiRUL + `?${queryParams}`);
