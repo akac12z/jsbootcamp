@@ -122,6 +122,7 @@ export function SearchPage() {
 				<JobSearch
 					onSearch={handleSearch}
 					onFilter={handleTextFilter}
+					onResetFilters={handleResetFilters}
 				/>
 
 				<section>

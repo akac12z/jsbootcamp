@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 
 // import jobsData from "../../../data.json";
 
-const MAX_RESULT_PER_PAGE = 5;
+const MAX_RESULT_PER_PAGE = 7;
 const FIRST_PAGE_RESULT = 1;
 const FIRST_TEXT_FILTER = "";
 const FIRST_JOBS = [];
 const FIRST_TOTAL_JOBS = 0;
 const IS_LOADING = true;
 const apiRUL = "https://jscamp-api.vercel.app/api/jobs";
-const VOID_FILTERS = { technology: "", location: "", experience: "" };
+const VOID_FILTERS = { technology: "", modalidad: "", nivel: "" }; // lo pongo en español porque midu lo tiene así
 
 export function useFilters() {
 	const [filters, setFilters] = useState(VOID_FILTERS);
@@ -19,16 +19,6 @@ export function useFilters() {
 	const [jobs, setJobs] = useState(FIRST_JOBS); // este primer estado es un problema porque no está teniendo nada y al hacer el primer .map no puede recuperar nada del undefined. por esto creo el total y setTotal
 	const [total, setTotal] = useState(FIRST_TOTAL_JOBS);
 	const [loading, setLoading] = useState(IS_LOADING);
-
-	// tarea: crear un btn para eliminar los filtros
-
-	const hasActiveFilters =
-		filters.technology || filters.location || filters.experience;
-	console.log({ "has filters?": hasActiveFilters });
-
-	const handleResetFilters = () => {
-		if (hasActiveFilters !== VOID_FILTERS) setFilters(VOID_FILTERS);
-	};
 
 	/*LOS FILTROS DEBERÍAN HACERSE EN EL BACKEND, POR ENDE, DE AQUÍ LOS VAMOS A COMENTAR*/
 	/*
@@ -91,8 +81,8 @@ export function useFilters() {
 				// para que la funcionalidad de filers a través del fetch funcione, tienes que tener primero la llamado a los filtros y leerlos y estos pasárselo a la url
 				const params = new URLSearchParams(); // para obtener y crear los params en la url
 				if (filters.technology) params.append("technology", filters.technology);
-				if (filters.location) params.append("location", filters.location);
-				if (filters.experience) params.append("experience", filters.experience);
+				if (filters.modalidad) params.append("modalidad", filters.modalidad);
+				if (filters.nivel) params.append("nivel", filters.nivel);
 				if (textToFilter) params.append("text", textToFilter);
 
 				// y para mostrar el offset y el page limit necesitas los siguientes cálculos
@@ -102,11 +92,15 @@ export function useFilters() {
 
 				const queryParams = params.toString(); // para pasar los parámetros que tengo en params
 
-				const response = await fetch(apiRUL + `?${queryParams}`);
-				console.log(response);
+				const queryUrl = apiRUL + `?${queryParams}`;
+				console.log("URL con parámetros:", queryUrl); // Debug para ver la URL completa
+				console.log("Filtros actuales:", filters); // Debug para ver los filtros
+
+				const response = await fetch(queryUrl);
+				// console.log(response);
 
 				const json = await response.json();
-				// console.log(json);
+				console.log(json);
 
 				setJobs(json.data); // guardamos el array de la data de la api
 				setTotal(json.total); // devuelvo el total de los results
@@ -135,6 +129,16 @@ export function useFilters() {
 		// esta es para filtrar mientras se está escribiendo en el input
 		setTextToFilter(text); // empieza a filtrar desde un "" y mientras escribe va escuchando el texto que se escribe y va aplicando el filtro
 		setCurrentPage(1); // cuando se aplica el filtro se vuelve a la página 1 porque no tiene sentido mantener en la página ya que puede ser que no hayan mas páginas
+	};
+
+	// tarea: crear un btn para eliminar los filtros
+
+	const hasActiveFilters =
+		filters.nivel || filters.technology || filters.modalidad;
+	// console.log({ "has filters?": hasActiveFilters });
+
+	const handleResetFilters = () => {
+		if (hasActiveFilters !== VOID_FILTERS) setFilters(VOID_FILTERS);
 	};
 
 	return {

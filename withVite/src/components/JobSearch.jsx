@@ -1,9 +1,8 @@
 import styles from "./jobSearch.module.css";
 import { useId } from "react";
 import { useSearchForm } from "../hooks/useSearchForm";
-import { useFilters } from "../hooks/useFilters";
 
-function JobSearch({ onSearch, onFilter }) {
+function JobSearch({ onSearch, onFilter, onResetFilters }) {
 	const idText = useId();
 	const idTech = useId();
 	const idLocation = useId();
@@ -19,7 +18,6 @@ function JobSearch({ onSearch, onFilter }) {
 			onFilter,
 			styles,
 		});
-	const { handleResetFilters } = useFilters();
 
 	// 2 formas distintas de manejar el submit
 	// 1. Usando el evento onSubmit del form qeu es darle al botón una vez escrito y usado el filtro
@@ -142,12 +140,13 @@ function JobSearch({ onSearch, onFilter }) {
 						id="filter-location"
 					>
 						<option value="">Ubicación</option>
-						<option value="remote">Remoto</option>
-						<option value="cdmx">Ciudad de México</option>
+						<option value="remoto">Remoto</option>
 						<option value="guadalajara">Guadalajara</option>
 						<option value="bogota">Bogotá</option>
-						<option value="monterrey">Monterrey</option>
 						<option value="barcelona">Barcelona</option>
+						<option value="madrid">Madrid</option>
+						<option value="valencia">Valencia</option>
+						<option value="bsas">Buenos Aires</option>
 					</select>
 
 					<select
@@ -156,9 +155,8 @@ function JobSearch({ onSearch, onFilter }) {
 					>
 						<option value="">Nivel de experiencia</option>
 						<option value="junior">Junior</option>
-						<option value="mid">Mid-level</option>
+						<option value="mid-level">Mid-level</option>
 						<option value="senior">Senior</option>
-						<option value="lead">Lead</option>
 					</select>
 					{/* <button
 						className={styles.submitBtn}
@@ -167,13 +165,13 @@ function JobSearch({ onSearch, onFilter }) {
 						Buscar
 					</button>
 					*/}
-					{}
+
 					<button
-						onClick={handleResetFilters}
+						onClick={onResetFilters}
 						className={styles.resetBtn}
 						type="reset"
 					>
-						Eliminar Filtros
+						Unfilter'
 					</button>
 				</div>
 			</form>
