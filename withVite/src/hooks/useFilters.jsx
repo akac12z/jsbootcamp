@@ -9,7 +9,7 @@ const FIRST_JOBS = [];
 const FIRST_TOTAL_JOBS = 0;
 const IS_LOADING = true;
 const apiRUL = "https://jscamp-api.vercel.app/api/jobs";
-const VOID_FILTERS = { technology: "", modalidad: "", nivel: "" }; // lo pongo en español porque midu lo tiene así
+const VOID_FILTERS = { technology: "", location: "", experienceLevel: "" };
 
 export function useFilters() {
 	const [filters, setFilters] = useState(VOID_FILTERS);
@@ -18,7 +18,7 @@ export function useFilters() {
 	const [currentPage, setCurrentPage] = useState(FIRST_PAGE_RESULT);
 	const [jobs, setJobs] = useState(FIRST_JOBS); // este primer estado es un problema porque no está teniendo nada y al hacer el primer .map no puede recuperar nada del undefined. por esto creo el total y setTotal
 	const [total, setTotal] = useState(FIRST_TOTAL_JOBS);
-	const [loading, setLoading] = useState(IS_LOADING);
+	const [isLoading, setIsLoading] = useState(IS_LOADING);
 
 	/*LOS FILTROS DEBERÍAN HACERSE EN EL BACKEND, POR ENDE, DE AQUÍ LOS VAMOS A COMENTAR*/
 	/*
@@ -77,13 +77,14 @@ export function useFilters() {
 	useEffect(() => {
 		async function fetchJobs() {
 			try {
-				setLoading(true);
+				setIsLoading(true);
 				// para que la funcionalidad de filers a través del fetch funcione, tienes que tener primero la llamado a los filtros y leerlos y estos pasárselo a la url
 				const params = new URLSearchParams(); // para obtener y crear los params en la url
-				if (filters.technology) params.append("technology", filters.technology);
-				if (filters.modalidad) params.append("modalidad", filters.modalidad);
-				if (filters.nivel) params.append("nivel", filters.nivel);
 				if (textToFilter) params.append("text", textToFilter);
+				if (filters.technology) params.append("technology", filters.technology);
+				if (filters.location) params.append("type", filters.location);
+				if (filters.experienceLevel)
+					params.append("level", filters.experienceLevel);
 
 				// y para mostrar el offset y el page limit necesitas los siguientes cálculos
 				const offset = (currentPage - 1) * MAX_RESULT_PER_PAGE; // calculamos la cantidad de resultados que quieres "saltarte" -> en la primera página 0, en la segunda quieres los MAX_RESULT... primeros y así sucesavamente
@@ -93,8 +94,8 @@ export function useFilters() {
 				const queryParams = params.toString(); // para pasar los parámetros que tengo en params
 
 				const queryUrl = apiRUL + `?${queryParams}`;
-				console.log("URL con parámetros:", queryUrl); // Debug para ver la URL completa
-				console.log("Filtros actuales:", filters); // Debug para ver los filtros
+				// console.log("URL con parámetros:", queryUrl); // Debug para ver la URL completa
+				// console.log("Filtros actuales:", filters); // Debug para ver los filtros
 
 				const response = await fetch(queryUrl);
 				// console.log(response);
@@ -106,7 +107,9 @@ export function useFilters() {
 				setTotal(json.total); // devuelvo el total de los results
 			} catch (error) {
 				console.error("Error al recuperar los datos");
-				setLoading(false);
+				setIsLoading(false);
+			} finally {
+				setIsLoading(false);
 			}
 		}
 
@@ -134,7 +137,7 @@ export function useFilters() {
 	// tarea: crear un btn para eliminar los filtros
 
 	const hasActiveFilters =
-		filters.nivel || filters.technology || filters.modalidad;
+		filters.experienceLevel || filters.technology || filters.location;
 	// console.log({ "has filters?": hasActiveFilters });
 
 	const handleResetFilters = () => {
@@ -148,8 +151,9 @@ export function useFilters() {
 		handleResetFilters,
 		jobs,
 		total,
-		loading,
+		isLoading,
 		totalPages,
 		currentPage,
+		textToFilter,
 	};
 }

@@ -11,6 +11,7 @@ export function SearchPage() {
 		handleSearch,
 		handleTextFilter,
 		handleResetFilters,
+		isLoading,
 		totalPages,
 		currentPage,
 		jobs,
@@ -126,6 +127,7 @@ export function SearchPage() {
 				/>
 
 				<section>
+					{isLoading ? <h3>Cargando elementos...</h3> : ""}
 					<JobListing jobsData={jobs} />
 
 					<Pagination

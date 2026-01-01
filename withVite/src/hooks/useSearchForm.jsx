@@ -28,8 +28,8 @@ export function useSearchForm({
 			// cons los filters estoy creando un objeto con los datos que vienen del form cada uno con su id que sería el name del select
 			search: formData.get(idText),
 			technology: formData.get(idTech),
-			modalidad: formData.get(idLocation),
-			nivel: formData.get(idExperience),
+			location: formData.get(idLocation),
+			experienceLevel: formData.get(idExperience),
 			// location: formData.get(idLocation),
 			// experience: formData.get(idExperience),
 		};
