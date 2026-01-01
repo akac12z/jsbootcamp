@@ -111,15 +111,18 @@ export function SearchPage() {
 	// 	}
 	// }, []) // si no hay nada, solo se ejecuta una vez
 
-	useEffect(() => {
-		// para cambiar el título de forma dinámica
-		document.title = `Resultados: ${total}, Página ${currentPage} de ${totalPages}`;
-	}, [total, currentPage]);
+	// useEffect(() => {
+	// 	// para cambiar el título de forma dinámica
+	// 	document.title = `Resultados: ${total}, Página ${currentPage} de ${totalPages}`;
+	// }, [total, currentPage]);
 	// console.log(loading);
 
+	const title = `Results: ${total}, Page ${currentPage} of ${totalPages}`;
+	// en react puedes utilizar dentro de los componentes de renderizado todas las etiquetas que quieras, incluidas las del SEO y por tanto, si quieres que estos elementos seas dinámicos, no tienes que tener ningún componente "en duro" que quieras modificar por tanto, tendrías que tener dentro del return todos.
 	return (
 		<>
 			<main>
+				<title>{title}</title>
 				<JobSearch
 					onSearch={handleSearch}
 					onFilter={handleTextFilter}
