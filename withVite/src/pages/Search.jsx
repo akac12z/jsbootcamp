@@ -117,7 +117,9 @@ export function SearchPage() {
 	// }, [total, currentPage]);
 	// console.log(loading);
 
-	const title = `Results: ${total}, Page ${currentPage} of ${totalPages}`;
+	const title = isLoading
+		? `Cargando... - DevJobs`
+		: `Results: ${total}, Page ${currentPage} of ${totalPages}`;
 	// en react puedes utilizar dentro de los componentes de renderizado todas las etiquetas que quieras, incluidas las del SEO y por tanto, si quieres que estos elementos seas dinámicos, no tienes que tener ningún componente "en duro" que quieras modificar por tanto, tendrías que tener dentro del return todos.
 	return (
 		<>
@@ -130,6 +132,9 @@ export function SearchPage() {
 				/>
 
 				<section>
+					<h2 style={{ textAlign: "center", margin: "20px" }}>
+						Resultados de búsqueda
+					</h2>
 					{isLoading ? <h3>Cargando elementos...</h3> : ""}
 					<JobListing jobsData={jobs} />
 

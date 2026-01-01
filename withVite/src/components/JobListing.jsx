@@ -4,8 +4,6 @@ import JobCard from "./JobCard";
 function JobListing({ jobsData }) {
 	return (
 		<section>
-			<h2>Resultados de búsqueda</h2>
-
 			<section className={styles.jobsListings}>
 				{jobsData.length === 0 && (
 					<h3
