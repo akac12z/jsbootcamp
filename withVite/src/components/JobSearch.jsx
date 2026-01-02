@@ -8,16 +8,21 @@ function JobSearch({ onSearch, onFilter, onResetFilters }) {
 	const idLocation = useId();
 	const idExperience = useId();
 
-	const { handleTextChange, handleSubmit, handleFocus, handleBlur } =
-		useSearchForm({
-			idExperience,
-			idLocation,
-			idTech,
-			idText,
-			onSearch,
-			onFilter,
-			styles,
-		});
+	const {
+		handleTextChange,
+		handleSubmit,
+		handleSearchChange,
+		handleFocus,
+		handleBlur,
+	} = useSearchForm({
+		idExperience,
+		idLocation,
+		idTech,
+		idText,
+		onSearch,
+		onFilter,
+		styles,
+	});
 
 	// 2 formas distintas de manejar el submit
 	// 1. Usando el evento onSubmit del form qeu es darle al botón una vez escrito y usado el filtro
@@ -74,7 +79,8 @@ function JobSearch({ onSearch, onFilter, onResetFilters }) {
 			<p>Explora miles de oportunidades en el sector tecnológico.</p>
 
 			<form
-				onChange={handleSubmit}
+				onChange={handleSearchChange}
+				// onChange={handleSubmit}
 				// onSubmit={handleSubmit}
 				id="job-search-form"
 				role="search"
@@ -104,7 +110,8 @@ function JobSearch({ onSearch, onFilter, onResetFilters }) {
 					<input
 						onFocus={handleFocus}
 						onBlur={handleBlur}
-						onChange={handleTextChange}
+						// onChange={handleSearchChange}
+						// onChange={handleTextChange}
 						name={idText}
 						id="job-search-input"
 						// required // hago esto no required porque al hacer la tarea toda con el submit, si lo dejo required y uso los filtros, me obliga a tener que poner algo en el text y quiero poder poner o no, text

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useFilters } from "../hooks/useFilters";
 
 import JobSearch from "../components/JobSearch";

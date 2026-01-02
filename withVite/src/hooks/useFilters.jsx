@@ -101,7 +101,7 @@ export function useFilters() {
 				// console.log(response);
 
 				const json = await response.json();
-				console.log(json);
+				// console.log(json);
 
 				setJobs(json.data); // guardamos el array de la data de la api
 				setTotal(json.total); // devuelvo el total de los results
