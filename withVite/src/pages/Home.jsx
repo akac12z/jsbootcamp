@@ -2,13 +2,16 @@ import { useId } from "react";
 import { useRouter } from "../hooks/useRouter";
 
 export function HomePage() {
-	const isSearch = useId();
+	const idText = useId();
 	const { navigateTo } = useRouter();
 
 	const handleSearch = (e) => {
-		e.preventDefault();
+		// e.preventDefault();
+		const text = e.target.value;
+		console.log(text);
+
 		const formData = new FormData(e.target); // creamos un formData con el form para poder acceder a los datos del form
-		const searchTerm = formData.get(isSearch); // obtenemos el valor del input a través del id name del search
+		const searchTerm = formData.get(idText); // obtenemos el valor del input a través del id name del search
 		// console.log(searchTerm);
 		const url = searchTerm
 			? `/search?query=${encodeURIComponent(searchTerm)}` // el encodeURIComponent() es para que el searchTerm no tenga caracteres especiales que puedan causar problemas y los codifique de manera que no haya pérdida de datos como son los espacios
@@ -54,7 +57,7 @@ export function HomePage() {
 							<path d="M3 10a7 7 0 1 0 14 0 7 7 0 1 0-14 0m18 11-6-6" />
 						</svg>
 						<input
-							name={isSearch}
+							name={idText}
 							required
 							type="text"
 							placeholder="Buscar empleos..."

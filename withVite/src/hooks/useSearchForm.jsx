@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
-let timeOutId = null; // no puede estar dentro del componente proqeu si no se cambiaría el valor cada vez que se ejecuta el hook y esto es para saber si se ha hecho una llamada
+// let timeOutId = null; // no puede estar dentro del componente proqeu si no se cambiaría el valor cada vez que se ejecuta el hook y esto es para saber si se ha hecho una llamada <- esto es temporal porque tiene qe ser con el useRef y es mala práctica porque la variable se compartiría la variable
 
 export function useSearchForm({
 	onSearch,
@@ -11,6 +11,7 @@ export function useSearchForm({
 	idExperience,
 	styles,
 }) {
+	const timeOutId = useRef(null); // permite mantener un valor independientemente del renderizado
 	const [searchText, setSearchText] = useState("");
 	const handleSubmit = (e) => {
 		// No usar preventDefault aquí porque es un onChange, no un submit
@@ -55,8 +56,8 @@ export function useSearchForm({
 		/* esto hace lo siguiente:
 			si tengo un timeOutId distinto de null, cosa que pasará si el usuario escribe, el timeOut esperará 500 milisegundo hasta escuchar el cambio del texto y solo se mantendrá la última petición que se haya hecho en el onFilter(text)
 		*/
-		if (!timeOutId) clearTimeout(timeOutId);
-		timeOutId = setTimeout(() => {
+		if (!timeOutId.current) clearTimeout(timeOutId.current); // tinees que acceder al .current porque es donde está el valor ya que el useRef te devuelve un objeto tal que así -> {current: "tu valor"}
+		timeOutId.current = setTimeout(() => {
 			onFilter(text); // esto no funciona porqeu solo retrasa pero los acumula, es decir, mantiene el estado de las teclas
 		}, 500); // entre 300 y 500 ms es lo indicado para darle espacio al usuario a que le muestre sin que se note demasiado
 

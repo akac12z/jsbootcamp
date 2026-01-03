@@ -1,4 +1,4 @@
-import styles from "./jobSearch.module.css";
+import styles from "../components/jobSearch.module.css";
 import { useId } from "react";
 import { useSearchForm } from "../hooks/useSearchForm";
 
