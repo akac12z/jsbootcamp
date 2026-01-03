@@ -2,19 +2,13 @@ import styles from "../components/jobSearch.module.css";
 import { useId } from "react";
 import { useSearchForm } from "../hooks/useSearchForm";
 
-function JobSearch({ onSearch, onFilter, onResetFilters }) {
+function JobSearch({ inputRef, onSearch, onFilter, onResetFilters }) {
 	const idText = useId();
 	const idTech = useId();
 	const idLocation = useId();
 	const idExperience = useId();
 
-	const {
-		handleTextChange,
-		handleSubmit,
-		handleSearchChange,
-		handleFocus,
-		handleBlur,
-	} = useSearchForm({
+	const { handleSearchChange, handleFocus, handleBlur } = useSearchForm({
 		idExperience,
 		idLocation,
 		idTech,
@@ -22,6 +16,7 @@ function JobSearch({ onSearch, onFilter, onResetFilters }) {
 		onSearch,
 		onFilter,
 		styles,
+		inputRef,
 	});
 
 	// 2 formas distintas de manejar el submit
@@ -108,6 +103,8 @@ function JobSearch({ onSearch, onFilter, onResetFilters }) {
 					</svg>
 
 					<input
+						// ref={inputRef}
+						ref={searchBarRef}
 						onFocus={handleFocus}
 						onBlur={handleBlur}
 						// onChange={handleSearchChange}

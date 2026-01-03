@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 // import jobsData from "../../../data.json";
 
@@ -19,6 +19,8 @@ export function useFilters() {
 	const [jobs, setJobs] = useState(FIRST_JOBS); // este primer estado es un problema porque no está teniendo nada y al hacer el primer .map no puede recuperar nada del undefined. por esto creo el total y setTotal
 	const [total, setTotal] = useState(FIRST_TOTAL_JOBS);
 	const [isLoading, setIsLoading] = useState(IS_LOADING);
+
+	const searchBarRef = useRef(); // esta variable es la que va a hacer que los inputs del search Bar se borren al pulsar el botón unfliter
 
 	/*LOS FILTROS DEBERÍAN HACERSE EN EL BACKEND, POR ENDE, DE AQUÍ LOS VAMOS A COMENTAR*/
 	/*
@@ -140,8 +142,12 @@ export function useFilters() {
 		filters.experienceLevel || filters.technology || filters.location;
 	// console.log({ "has filters?": hasActiveFilters });
 
-	const handleResetFilters = () => {
+	const handleResetFilters = (e) => {
 		if (hasActiveFilters !== VOID_FILTERS) setFilters(VOID_FILTERS);
+		// e.preventDefault();
+
+		searchBarRef.current.value = ""; // hago el que current sea ""
+		textToFilter(""); // hago que el texto sea ""
 	};
 
 	return {
@@ -155,5 +161,6 @@ export function useFilters() {
 		totalPages,
 		currentPage,
 		textToFilter,
+		searchBarRef,
 	};
 }

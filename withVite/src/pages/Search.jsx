@@ -15,6 +15,7 @@ export function SearchPage() {
 		currentPage,
 		jobs,
 		total,
+		searchBarRef,
 	} = useFilters();
 	// const [filters, setFilters] = useState({
 	// 	technology: "",
@@ -128,6 +129,7 @@ export function SearchPage() {
 					onSearch={handleSearch}
 					onFilter={handleTextFilter}
 					onResetFilters={handleResetFilters}
+					inputRef={searchBarRef}
 				/>
 
 				<section>

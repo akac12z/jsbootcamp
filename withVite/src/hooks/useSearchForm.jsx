@@ -83,8 +83,8 @@ export function useSearchForm({
 		};
 
 		if (e.target.name === idText) {
-			if (!timeOutId) clearTimeout(timeOutId);
-			timeOutId = setTimeout(() => {
+			if (!timeOutId.current) clearTimeout(timeOutId.current);
+			timeOutId.current = setTimeout(() => {
 				onFilter(text);
 			}, 500);
 		} else {
