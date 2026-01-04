@@ -1,26 +1,46 @@
 import { useEffect, useState, useRef } from "react";
+import { useRouter } from "../hooks/useRouter";
 
 // import jobsData from "../../../data.json";
 
 const MAX_RESULT_PER_PAGE = 7;
+const FIRST_TOTAL_JOBS = 0;
 const FIRST_PAGE_RESULT = 1;
 const FIRST_TEXT_FILTER = "";
 const FIRST_JOBS = [];
-const FIRST_TOTAL_JOBS = 0;
 const IS_LOADING = true;
 const apiRUL = "https://jscamp-api.vercel.app/api/jobs";
 const VOID_FILTERS = { technology: "", location: "", experienceLevel: "" };
 
 export function useFilters() {
-	const [filters, setFilters] = useState(VOID_FILTERS);
-
-	const [textToFilter, setTextToFilter] = useState(FIRST_TEXT_FILTER);
-	const [currentPage, setCurrentPage] = useState(FIRST_PAGE_RESULT);
-	const [jobs, setJobs] = useState(FIRST_JOBS); // este primer estado es un problema porque no está teniendo nada y al hacer el primer .map no puede recuperar nada del undefined. por esto creo el total y setTotal
+	const { navigateTo } = useRouter();
 	const [total, setTotal] = useState(FIRST_TOTAL_JOBS);
 	const [isLoading, setIsLoading] = useState(IS_LOADING);
-
+	const totalPages = Math.ceil(total / MAX_RESULT_PER_PAGE); // como estoy filtrando los resultados, el total de páginas se va a ir cambiando y por ende, la paginación y esta dependerá de la cantidad de resultados que tenga y el MAX_RESULT_PER_PAGE
 	const searchBarRef = useRef(); // esta variable es la que va a hacer que los inputs del search Bar se borren al pulsar el botón unfliter
+	const [jobs, setJobs] = useState(FIRST_JOBS); // este primer estado es un problema porque no está teniendo nada y al hacer el primer .map no puede recuperar nada del undefined. por esto creo el total y setTotal
+
+	// const [textToFilter, setTextToFilter] = useState(FIRST_TEXT_FILTER); // si mantengo esto, el problema que se crearía sería que no puedes mantener el estado de la url al refrescar. si tuvieras ?q=react, al refrescar, se volvería a la página inicial
+	const [textToFilter, setTextToFilter] = useState(() => {
+		const params = new URLSearchParams(window.location.search); // queremos que el valor por defecto sea el que existe en el urlSearchParams
+		return params.get("text") || ""; // devolvemos la url con el param del text y si no hay, no se devuelve nada
+	});
+	// const [currentPage, setCurrentPage] = useState(FIRST_PAGE_RESULT); // pasaría exactamente lo mismo si asignas el valor por defecto 1, al refrescar  y volver a cargarlo todo, todo volvería al estado inicial
+	const [currentPage, setCurrentPage] = useState(() => {
+		const params = new URLSearchParams(window.location.search); // queremos que el valor por defecto sea el que existe en el urlSearchParams
+		const page = Number(params.get("page")); // recuperamos de los params el page y los hacemos númeor para validar que nadie en la url pueda poner algo distintos y si lo pone, que lo redirija a donde yo quiero (la pgáina 1)
+		const isValidURL = Number.isNaN(page) && page > 1 && page <= totalPages; // he intentado hacer todas las comprobaciones posibles para que no de error
+		return isValidURL ? page : 1; // si el texto de la url es un número, le devuelve a la página de dicho número, y si no lo es, le da 1
+	});
+	// const [filters, setFilters] = useState(VOID_FILTERS); // igual que las anteriores, si lo hardcodeas, al refrescar se pierde el estado
+	const [filters, setFilters] = useState(() => {
+		const params = new URLSearchParams(window.location.search);
+		return {
+			technology: params.get("technology") || "",
+			location: params.get("type") || "",
+			experienceLevel: params.get("level") || "",
+		};
+	});
 
 	/*LOS FILTROS DEBERÍAN HACERSE EN EL BACKEND, POR ENDE, DE AQUÍ LOS VAMOS A COMENTAR*/
 	/*
@@ -118,7 +138,30 @@ export function useFilters() {
 		fetchJobs();
 	}, [filters, textToFilter, currentPage]); // si esto está vacío, solo se renderizará una vez, y es útil si no quieres interactividad pero si necesitas que se refresque la llamada a la api cada vez que un filtro se modifica, necesitas decirle qué tiene que estar observando para que cuando cambie, hacer la llamada
 
-	const totalPages = Math.ceil(total / MAX_RESULT_PER_PAGE); // como estoy filtrando los resultados, el total de páginas se va a ir cambiando y por ende, la paginación y esta dependerá de la cantidad de resultados que tenga y el MAX_RESULT_PER_PAGE
+	// efecto para ver el cambio en la url
+	useEffect(() => {
+		const params = new URLSearchParams(); // creas los parámetros
+
+		// buscar tener todos los filtros que tienes y que pueden modificarse en los params
+		if (textToFilter) params.append("text", textToFilter);
+		if (filters.technology) params.append("technology", filters.technology);
+		if (filters.location) params.append("type", filters.location);
+		if (filters.experienceLevel)
+			params.append("level", filters.experienceLevel);
+
+		// si estás en la página 1 usas por defecto en la que estás, pero si es mayor a 1 es cuando vas a construir la url
+		if (currentPage > 1) params.append("page", currentPage); // creas la paginación con el page
+
+		//creas la nueva URL con los params,
+		const newURL = params.toString()
+			? `${window.location.pathname}?${params.toString()}` // si existen params le añado al pathname aquellos que existan
+			: `${window.location.pathname}`; // si no hay params, devuelvo la url en la que está
+		// tb podrías poner /search?{{aquí los params}} pero el problema de esto es que si cambia el /search, te toca buscar en el código a mano y cmabiarlo
+
+		// usas el navigateTo del useRouter para navegar entre páginas
+		navigateTo(newURL);
+	}, [filters, currentPage, textToFilter, navigateTo]); // tb hay que pasarle el navigateTo por si cambiase
+
 	const handlePageChange = (page) => {
 		// console.log("Page changed to:", page);
 		setCurrentPage(page);

@@ -13,6 +13,7 @@ export function SearchPage() {
 		isLoading,
 		totalPages,
 		currentPage,
+		textToFilter,
 		jobs,
 		total,
 		searchBarRef,
@@ -130,6 +131,7 @@ export function SearchPage() {
 					onFilter={handleTextFilter}
 					onResetFilters={handleResetFilters}
 					inputRef={searchBarRef}
+					initialText={textToFilter}
 				/>
 
 				<section>

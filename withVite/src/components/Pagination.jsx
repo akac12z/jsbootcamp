@@ -42,10 +42,16 @@ function Pagination({ currentPage = 1, totalPages = 6, onPageChange }) {
 		}
 	};
 
+	const buildPageUrl = (page) => {
+		const url = new URL(window.location); // construyes la página donde está el user
+		url.searchParams.set("page", page); // creo los parámetros el cual se va a llamar page y va a ser el tipo page que está recibiendo
+		return `${url.pathname}?${url.searchParams.toString()}`; // devuelves la url
+	};
+
 	return (
 		<nav className={styles.pagination}>
 			<a
-				href="#"
+				href={buildPageUrl(currentPage - 1)}
 				onClick={handlePrevClick}
 				style={styleLeftPagination}
 				className={`${styles.arrowPagination} ${styles.arrowLeftPagination}`}
@@ -70,11 +76,10 @@ function Pagination({ currentPage = 1, totalPages = 6, onPageChange }) {
 			</a>
 
 			{pages.map((page) => {
-				
 				return (
 					<a
 						key={page}
-						href="#"
+						href={buildPageUrl(page)}
 						onClick={(e) => handleChangePage(e, page)}
 						className={currentPage === page ? `${styles.isActive}` : ""}
 					>
@@ -86,7 +91,7 @@ function Pagination({ currentPage = 1, totalPages = 6, onPageChange }) {
 			{/* botón de siguiente página */}
 
 			<a
-				href="#"
+				href={buildPageUrl(currentPage + 1)}
 				className={`${styles.arrowPagination} ${styles.arrowRightPagination}`}
 				style={styleRightPagination}
 				onClick={handleNextClick}

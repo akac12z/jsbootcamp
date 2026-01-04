@@ -2,7 +2,13 @@ import styles from "../components/jobSearch.module.css";
 import { useId } from "react";
 import { useSearchForm } from "../hooks/useSearchForm";
 
-function JobSearch({ inputRef, onSearch, onFilter, onResetFilters }) {
+function JobSearch({
+	inputRef,
+	onSearch,
+	onFilter,
+	onResetFilters,
+	initialText,
+}) {
 	const idText = useId();
 	const idTech = useId();
 	const idLocation = useId();
@@ -107,6 +113,7 @@ function JobSearch({ inputRef, onSearch, onFilter, onResetFilters }) {
 						ref={inputRef}
 						onFocus={handleFocus}
 						onBlur={handleBlur}
+						defaultValue={initialText}
 						// onChange={handleSearchChange}
 						// onChange={handleTextChange}
 						name={idText}
