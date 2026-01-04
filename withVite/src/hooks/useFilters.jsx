@@ -142,12 +142,13 @@ export function useFilters() {
 		filters.experienceLevel || filters.technology || filters.location;
 	// console.log({ "has filters?": hasActiveFilters });
 
-	const handleResetFilters = (e) => {
+	const handleResetFilters = () => {
 		if (hasActiveFilters !== VOID_FILTERS) setFilters(VOID_FILTERS);
 		// e.preventDefault();
 
 		searchBarRef.current.value = ""; // hago el que current sea ""
-		textToFilter(""); // hago que el texto sea ""
+		// textToFilter(""); // hago que el texto sea "" -> esto no funciona porque no es una función, no puedo llamar a un valor para que se ejecute, necesito llamar a una función que sete el valor
+		handleTextFilter(""); // hago que el texto sea ""
 	};
 
 	return {

@@ -104,7 +104,7 @@ function JobSearch({ inputRef, onSearch, onFilter, onResetFilters }) {
 
 					<input
 						// ref={inputRef}
-						ref={searchBarRef}
+						ref={inputRef}
 						onFocus={handleFocus}
 						onBlur={handleBlur}
 						// onChange={handleSearchChange}
