@@ -1,7 +1,13 @@
+import { Route, Router, Routes } from "react-router";
+
 import { allPages } from "./global/pages";
-import { Router } from "./components/router/Router";
+// import { Router } from "./components/router/Router";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { HomePage } from "./pages/Home";
+import { SearchPage } from "./pages/Search";
+import { NotFoundPage } from "./pages/404";
+import { ContactPage } from "./pages/Contact";
 
 function App() {
 	// // necesito poder saber en qué path estoy para poder moverme entre páginas
@@ -36,17 +42,35 @@ function App() {
 	return (
 		<>
 			<Header />
-			{allPages.map((page) => {
-				const { key, path, component } = page;
-
-				return (
-					<Router
+			{/* {allPages.map((page) => {
+					const { key, path, component } = page;
+					
+					return (
+						<Router
 						key={key}
 						path={path}
 						component={component}
-					/>
-				);
-			})}
+						/>
+						);
+						})} */}
+			<Routes>
+				<Route
+					path="/"
+					element={<HomePage />}
+				/>
+				<Route
+					path="/search"
+					element={<SearchPage />}
+				/>
+				<Route
+					path="/contact"
+					element={<ContactPage />}
+				/>
+				<Route
+					path="*" // para el resto de componentes usará el NotFound
+					element={<NotFoundPage />}
+				/>
+			</Routes>
 			<Footer />
 		</>
 	);
