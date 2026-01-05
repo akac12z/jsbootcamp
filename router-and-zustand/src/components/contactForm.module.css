@@ -1,0 +1,199 @@
+.contactForm {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 2rem 1rem;
+
+	section:first-child {
+		text-align: center;
+		margin-bottom: 2rem;
+
+		h2 {
+			font-size: 2.5rem;
+			margin-bottom: 0.5rem;
+			color: var(--text-primary);
+		}
+
+		p {
+			font-size: 1.25rem;
+			color: var(--text-muted);
+		}
+	}
+
+	section:last-child {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	form {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	/* Sección de nombre con dos columnas */
+	.nameSection {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+
+		@media (max-width: 640px) {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	/* Labels y inputs generales */
+	label {
+		display: block;
+		margin-bottom: 0.75rem;
+		color: var(--text-primary);
+		font-weight: 500;
+		font-size: 0.875rem;
+		background-color: transparent;
+		padding: 0;
+	}
+
+	input[type="text"],
+	input[type="email"] {
+		width: 100%;
+		padding: 0.75rem 1rem;
+		background-color: var(--input-bg);
+		border: 1px solid var(--border);
+		border-radius: 0.5rem;
+		color: var(--text-primary);
+		font-size: 1rem;
+		font-family: inherit;
+		transition: all 0.2s;
+		margin-top: 0.5rem;
+
+		&::placeholder {
+			color: var(--text-muted);
+		}
+
+		&:focus {
+			outline: none;
+			border-color: var(--primary);
+			background-color: rgba(245, 158, 11, 0.05);
+		}
+
+		&:hover {
+			border-color: rgba(255, 255, 255, 0.2);
+		}
+	}
+
+	/* Email section */
+	.emailSection {
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* Country section */
+	.countrySection {
+		display: flex;
+		flex-direction: column;
+
+		.thridSection {
+			width: 100%;
+		}
+
+		select {
+			width: 100%;
+			padding: 0.75rem 1rem;
+			background-color: var(--input-bg);
+			border: 1px solid var(--border);
+			border-radius: 0.5rem;
+			font-size: 1rem;
+			color: var(--text-primary);
+			cursor: pointer;
+			transition: all 0.2s;
+			appearance: none;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+			background-repeat: no-repeat;
+			background-position: right 1rem center;
+			padding-right: 2.5rem;
+			margin-top: 0.5rem;
+
+			&:hover {
+				border-color: rgba(255, 255, 255, 0.2);
+			}
+
+			&:focus {
+				outline: none;
+				border-color: var(--primary);
+				background-color: rgba(245, 158, 11, 0.05);
+			}
+		}
+	}
+
+	/* Address section */
+	.addressSection {
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* City, Province, Zip section - tres columnas */
+	form > div:nth-child(6) {
+		display: grid;
+		grid-template-columns: 2fr 2fr 1fr;
+		gap: 1rem;
+
+		@media (max-width: 768px) {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		@media (max-width: 480px) {
+			grid-template-columns: 1fr;
+		}
+
+		& > div {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+
+	/* Message section */
+	form > div:nth-child(7) {
+		display: flex;
+		flex-direction: column;
+
+		input {
+			min-height: 120px;
+			padding-top: 1rem;
+			resize: vertical;
+		}
+	}
+
+	/* Submit button */
+	.submitBtn {
+		background-color: var(--primary);
+		color: white;
+		border: none;
+		padding: 0.75rem 1.5rem;
+		border-radius: 0.5rem;
+		font-size: 1rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.2s;
+		width: 100%;
+		max-width: 200px;
+		margin: 1rem auto 0;
+
+		&:hover {
+			background-color: var(--primary-hover);
+		}
+
+		&:focus {
+			outline: 2px solid var(--primary);
+			outline-offset: 2px;
+		}
+
+		&:active {
+			transform: scale(0.98);
+		}
+
+		&:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+	}
+}

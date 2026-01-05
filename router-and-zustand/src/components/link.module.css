@@ -1,0 +1,9 @@
+.link {
+	text-decoration: none;
+	color: var(--text-primary);
+	transition: color 0.2s;
+}
+
+.isActive {
+	color: var(--primary);
+}

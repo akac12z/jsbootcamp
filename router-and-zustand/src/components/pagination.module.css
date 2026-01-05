@@ -1,0 +1,52 @@
+/* hacer este tipo de paginaciones es muy común y muy recomendable saber hacerlo */
+
+/* tener el css en modules permite que no haya conflictos con otros archivos css porque se crean variables únicas para cada archivo con un hash único */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-block: 2rem;
+  color: black;
+
+  a {
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    /* transform: all 0.3s; */
+
+    &:hover,
+    &:focus {
+      border: solid 1px var(--primary);
+      /* transition: color 0.3s; */
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+
+    &.isActive {
+      background-color: var(--primary);
+      color: black;
+      pointer-events: none;
+    }
+  }
+
+  .arrowPagination {
+    color: var(--primary);
+    background: transparent;
+    border: solid 1px var(--primary);
+    padding: 0.3rem 0.3rem;
+    display: flex;
+  }
+  .arrowLeftPagination {
+    margin-right: 1.5rem;
+  }
+  .arrowRightPagination {
+    margin-left: 1.5rem;
+  }
+}
