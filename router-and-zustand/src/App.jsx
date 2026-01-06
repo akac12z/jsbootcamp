@@ -1,4 +1,4 @@
-import { Route, Router, Routes } from "react-router";
+import { Route, Routes } from "react-router";
 
 import { allPages } from "./global/pages";
 // import { Router } from "./components/router/Router";
@@ -8,6 +8,7 @@ import { HomePage } from "./pages/Home";
 import { SearchPage } from "./pages/Search";
 import { NotFoundPage } from "./pages/404";
 import { ContactPage } from "./pages/Contact";
+import { JobDatail } from "./pages/Detail";
 
 function App() {
 	// // necesito poder saber en qué path estoy para poder moverme entre páginas
@@ -65,6 +66,10 @@ function App() {
 				<Route
 					path="/contact"
 					element={<ContactPage />}
+				/>
+				<Route
+					path="/jobs/:id" // este :id es para buscar por el id del job pero :id puedes poiner lo que quieras, :keyword, :data, :job-description... pero siempre que en el componente que estás renderizando el useParams (en este caso en el Datail.jsx) tenga el mismo nombre
+					element={<JobDatail />}
 				/>
 				<Route
 					path="*" // para el resto de componentes usará el NotFound

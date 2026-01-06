@@ -9,7 +9,7 @@ const FIRST_PAGE_RESULT = 1;
 const FIRST_TEXT_FILTER = "";
 const FIRST_JOBS = [];
 const IS_LOADING = true;
-const apiRUL = "https://jscamp-api.vercel.app/api/jobs";
+const API_URL = "https://jscamp-api.vercel.app/api/jobs";
 const VOID_FILTERS = { technology: "", location: "", experienceLevel: "" };
 
 export function useFilters() {
@@ -115,7 +115,7 @@ export function useFilters() {
 
 				const queryParams = params.toString(); // para pasar los parámetros que tengo en params
 
-				const queryUrl = apiRUL + `?${queryParams}`;
+				const queryUrl = API_URL + `?${queryParams}`;
 				// console.log("URL con parámetros:", queryUrl); // Debug para ver la URL completa
 				// console.log("Filtros actuales:", filters); // Debug para ver los filtros
 
