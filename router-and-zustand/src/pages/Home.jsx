@@ -22,7 +22,7 @@ export function HomePage() {
 		<main>
 			<section>
 				<img
-					src="../../public/background.webp"
+					src="/background.webp"
 					alt="dev coding"
 					width="200"
 				/>
