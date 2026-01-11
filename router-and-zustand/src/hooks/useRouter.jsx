@@ -1,6 +1,5 @@
 // ASI ES COMO FUNCIONA REACT ROUTER A MUY GROSO MODO. ESTÁ BIEN SABER CÓMO SE HACEN CIERTAS COSAS PERO USAR REACT ROUTER ES MÁS ÚTIL Y POTENTE
 
-import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 
 // CUSTOM HOOK

@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router";
 
 import { allPages } from "./global/pages";
@@ -8,7 +9,7 @@ import { HomePage } from "./pages/Home";
 import { SearchPage } from "./pages/Search";
 import { NotFoundPage } from "./pages/404";
 import { ContactPage } from "./pages/Contact";
-import { JobDatail } from "./pages/Detail";
+import { JobDatail } from "./pages/Jobs";
 
 function App() {
 	// // necesito poder saber en qué path estoy para poder moverme entre páginas

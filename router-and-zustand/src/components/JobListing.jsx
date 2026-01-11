@@ -23,6 +23,7 @@ function JobListing({ jobsData }) {
 						<>
 							<JobCard
 								key={id}
+								id={id}
 								title={titulo}
 								company={empresa}
 								location={ubicacion}

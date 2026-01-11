@@ -1,7 +1,8 @@
 import styles from "./jobCard.module.css";
+import { Link } from "./Link";
 import { useState } from "react";
 
-function JobCard({ title, company, location, description }) {
+function JobCard({ title, company, location, description, id }) {
 	const [isApplied, setIsApplied] = useState(false);
 
 	function handleClick() {
@@ -9,15 +10,24 @@ function JobCard({ title, company, location, description }) {
 	}
 
 	const btnText = isApplied ? "Aplicado" : "Aplicar";
-	const buttonClass = isApplied ? `${styles.btnApplyJob} ${styles.isApplied}` : styles.btnApplyJob;
+	const buttonClass = isApplied
+		? `${styles.btnApplyJob} ${styles.isApplied}`
+		: styles.btnApplyJob;
 
 	return (
 		<article className={styles.jobListingCard}>
 			<div>
-				<h3>{title}</h3>
-				<small>
-					{company} - {location}
-				</small>
+				<h3>
+					<Link href={`/jobs/${id}`}>{title}</Link>
+				</h3>
+				<div>
+					<small>
+						{company} - {location}
+					</small>
+					<span className={styles.link}>
+						<Link href={`/jobs/${id}`}>Ver Detalles</Link>
+					</span>
+				</div>
 				<p>{description}</p>
 			</div>
 			<button

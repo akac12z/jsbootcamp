@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "../hooks/useRouter";
+import { useSearchParams } from "react-router";
 
 // import jobsData from "../../../data.json";
 
@@ -13,6 +14,8 @@ const API_URL = "https://jscamp-api.vercel.app/api/jobs";
 const VOID_FILTERS = { technology: "", location: "", experienceLevel: "" };
 
 export function useFilters() {
+	const [searchParams, setSearchParams] = useSearchParams();
+
 	const { navigateTo } = useRouter();
 	const [total, setTotal] = useState(FIRST_TOTAL_JOBS);
 	const [isLoading, setIsLoading] = useState(IS_LOADING);
@@ -22,23 +25,24 @@ export function useFilters() {
 
 	// const [textToFilter, setTextToFilter] = useState(FIRST_TEXT_FILTER); // si mantengo esto, el problema que se crearía sería que no puedes mantener el estado de la url al refrescar. si tuvieras ?q=react, al refrescar, se volvería a la página inicial
 	const [textToFilter, setTextToFilter] = useState(() => {
-		const params = new URLSearchParams(window.location.search); // queremos que el valor por defecto sea el que existe en el urlSearchParams
-		return params.get("text") || ""; // devolvemos la url con el param del text y si no hay, no se devuelve nada
+		// comento las líneas de params porque con react-router puedo hacar lo mismo con el useSearchParams
+		// const params = new URLSearchParams(window.location.search); // queremos que el valor por defecto sea el que existe en el urlSearchParams
+		return searchParams.get("text") || ""; // devolvemos la url con el param del text y si no hay, no se devuelve nada
 	});
 	// const [currentPage, setCurrentPage] = useState(FIRST_PAGE_RESULT); // pasaría exactamente lo mismo si asignas el valor por defecto 1, al refrescar  y volver a cargarlo todo, todo volvería al estado inicial
 	const [currentPage, setCurrentPage] = useState(() => {
-		const params = new URLSearchParams(window.location.search); // queremos que el valor por defecto sea el que existe en el urlSearchParams
-		const page = Number(params.get("page")); // recuperamos de los params el page y los hacemos númeor para validar que nadie en la url pueda poner algo distintos y si lo pone, que lo redirija a donde yo quiero (la pgáina 1)
+		// const params = new URLSearchParams(window.location.search); // queremos que el valor por defecto sea el que existe en el urlSearchParams
+		const page = Number(searchParams.get("page")); // recuperamos de los params el page y los hacemos númeor para validar que nadie en la url pueda poner algo distintos y si lo pone, que lo redirija a donde yo quiero (la pgáina 1)
 		const isValidURL = Number.isNaN(page) && page > 1 && page <= totalPages; // he intentado hacer todas las comprobaciones posibles para que no de error
 		return isValidURL ? page : 1; // si el texto de la url es un número, le devuelve a la página de dicho número, y si no lo es, le da 1
 	});
 	// const [filters, setFilters] = useState(VOID_FILTERS); // igual que las anteriores, si lo hardcodeas, al refrescar se pierde el estado
 	const [filters, setFilters] = useState(() => {
-		const params = new URLSearchParams(window.location.search);
+		// const params = new URLSearchParams(window.location.search);
 		return {
-			technology: params.get("technology") || "",
-			location: params.get("type") || "",
-			experienceLevel: params.get("level") || "",
+			technology: searchParams.get("technology") || "",
+			location: searchParams.get("type") || "",
+			experienceLevel: searchParams.get("level") || "",
 		};
 	});
 
@@ -140,27 +144,37 @@ export function useFilters() {
 
 	// efecto para ver el cambio en la url
 	useEffect(() => {
-		const params = new URLSearchParams(); // creas los parámetros
+		const params = new URLSearchParams(); // creas los parámetros -> esto lo puedo comentar gracias a setSearchParams de react-ruter que me los actualiza y lo metería todo lo de abajo dentro del setSearchParams
+		setSearchParams(() => {
+			// buscar tener todos los filtros que tienes y que pueden modificarse en los params
+			// de la nueva forma (react-router) si tengo el .append lo que haces es añadir cada parámetro a la url SIN ELIMINAR LOS QUE YA TIENES, y no los seteas de nuevo por tento, hay que cambiar el .append por .set
+			if (textToFilter) params.set("text", textToFilter);
+			if (filters.technology) params.set("technology", filters.technology);
+			if (filters.location) params.set("type", filters.location);
+			if (filters.experienceLevel) params.set("level", filters.experienceLevel);
 
-		// buscar tener todos los filtros que tienes y que pueden modificarse en los params
-		if (textToFilter) params.append("text", textToFilter);
-		if (filters.technology) params.append("technology", filters.technology);
-		if (filters.location) params.append("type", filters.location);
-		if (filters.experienceLevel)
-			params.append("level", filters.experienceLevel);
+			// si estás en la página 1 usas por defecto en la que estás, pero si es mayor a 1 es cuando vas a construir la url
+			if (currentPage > 1) params.set("page", currentPage); // creas la paginación con el page
 
-		// si estás en la página 1 usas por defecto en la que estás, pero si es mayor a 1 es cuando vas a construir la url
-		if (currentPage > 1) params.append("page", currentPage); // creas la paginación con el page
+			//creas la nueva URL con los params,
 
-		//creas la nueva URL con los params,
-		const newURL = params.toString()
-			? `${window.location.pathname}?${params.toString()}` // si existen params le añado al pathname aquellos que existan
-			: `${window.location.pathname}`; // si no hay params, devuelvo la url en la que está
-		// tb podrías poner /search?{{aquí los params}} pero el problema de esto es que si cambia el /search, te toca buscar en el código a mano y cmabiarlo
+			/* 
+			// esta funcion no haría falta gracias al react-router -> 
+			const newURL = params.toString()
+				? `${window.location.pathname}?${params.toString()}` // si existen params le añado al pathname aquellos que existan
+				: `${window.location.pathname}`; // si no hay params, devuelvo la url en la que está
+			// tb podrías poner /search?{{aquí los params}} pero el problema de esto es que si cambia el /search, te toca buscar en el código a mano y cmabiarlo
 
-		// usas el navigateTo del useRouter para navegar entre páginas
-		navigateTo(newURL);
-	}, [filters, currentPage, textToFilter, navigateTo]); // tb hay que pasarle el navigateTo por si cambiase
+			// usas el navigateTo del useRouter para navegar entre páginas
+			*/
+			return params;
+		});
+	}, [
+		filters,
+		currentPage,
+		textToFilter,
+		// navigateTo,
+	]); // tb hay que pasarle el navigateTo por si cambiase
 
 	const handlePageChange = (page) => {
 		// console.log("Page changed to:", page);
@@ -208,3 +222,20 @@ export function useFilters() {
 		searchBarRef,
 	};
 }
+
+/*
+como dato!
+cuando quieres devolver la primera linea en un state de react, puede omitir el return y devolver la primera funcion como valor
+
+y no es lo mismo 
+	const [textToFilter, setTextToFilter] = useState(() => searchParams.get("text") || "");
+
+	que
+
+	const [textToFilter, setTextToFilter] = useState(searchParams.get("text") || "");
+
+	el primero se renderiza una única vez gracias a ser una funcion la que lo llama
+	mientras que el segundo, se renderiza cada vez que el componente cambia.
+
+	si estás buscando algo en el search, cada vez que escribes, la segúnda se estaría ejecutando mientras que la primera solo cuando cambie el componente
+	*/
