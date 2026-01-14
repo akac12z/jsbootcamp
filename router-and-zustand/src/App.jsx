@@ -5,11 +5,19 @@ import { allPages } from "./global/pages";
 // import { Router } from "./components/router/Router";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { HomePage } from "./pages/Home";
-import { SearchPage } from "./pages/Search";
-import { NotFoundPage } from "./pages/404";
-import { ContactPage } from "./pages/Contact";
-import { JobDatail } from "./pages/Jobs";
+
+// import { HomePage } from "./pages/Home";
+// import { SearchPage } from "./pages/Search";
+// import { NotFoundPage } from "./pages/404";
+// import { ContactPage } from "./pages/Contact";
+// import { JobDatail } from "./pages/Jobs";
+
+// cargamos los componentes de forma lazy para que no carga js innecesario. para hacer esto, los componentes que estás trayendo deben estar con el 'default' en el import
+const HomePage = lazy(() => import("./pages/Home.jsx"));
+const SearchPage = lazy(() => import("./pages/Search.jsx"));
+const NotFoundPage = lazy(() => import("./pages/404.jsx"));
+const ContactPage = lazy(() => import("./pages/Contact.jsx"));
+const JobDatail = lazy(() => import("./pages/Jobs.jsx"));
 
 function App() {
 	// // necesito poder saber en qué path estoy para poder moverme entre páginas
@@ -55,28 +63,38 @@ function App() {
 						/>
 						);
 						})} */}
-			<Routes>
-				<Route
-					path="/"
-					element={<HomePage />}
-				/>
-				<Route
-					path="/search"
-					element={<SearchPage />}
-				/>
-				<Route
-					path="/contact"
-					element={<ContactPage />}
-				/>
-				<Route
-					path="/jobs/:id" // este :id es para buscar por el id del job pero :id puedes poiner lo que quieras, :keyword, :data, :job-description... pero siempre que en el componente que estás renderizando el useParams (en este caso en el Datail.jsx) tenga el mismo nombre
-					element={<JobDatail />}
-				/>
-				<Route
-					path="*" // para el resto de componentes usará el NotFound
-					element={<NotFoundPage />}
-				/>
-			</Routes>
+			<Suspense
+				fallback={
+					<div
+						style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 auto" }}
+					>
+						Cargando...
+					</div>
+				}
+			>
+				<Routes>
+					<Route
+						path="/"
+						element={<HomePage />}
+					/>
+					<Route
+						path="/search"
+						element={<SearchPage />}
+					/>
+					<Route
+						path="/contact"
+						element={<ContactPage />}
+					/>
+					<Route
+						path="/jobs/:id" // este :id es para buscar por el id del job pero :id puedes poiner lo que quieras, :keyword, :data, :job-description... pero siempre que en el componente que estás renderizando el useParams (en este caso en el Datail.jsx) tenga el mismo nombre
+						element={<JobDatail />}
+					/>
+					<Route
+						path="*" // para el resto de componentes usará el NotFound
+						element={<NotFoundPage />}
+					/>
+				</Routes>
+			</Suspense>
 			<Footer />
 		</>
 	);

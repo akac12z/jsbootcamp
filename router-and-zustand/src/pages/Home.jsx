@@ -1,7 +1,7 @@
 import { useId } from "react";
 import { useRouter } from "../hooks/useRouter";
 
-export function HomePage() {
+export default function HomePage() {
 	const idText = useId();
 	const { navigateTo } = useRouter();
 

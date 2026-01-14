@@ -4,7 +4,7 @@ import JobSearch from "../components/JobSearch";
 import Pagination from "../components/Pagination";
 import JobListing from "../components/JobListing";
 
-export function SearchPage() {
+export default function SearchPage() {
 	const {
 		handlePageChange,
 		handleSearch,

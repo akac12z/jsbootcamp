@@ -59,7 +59,7 @@ function JobSection({ title, content }) {
 	);
 }
 
-export function JobDatail() {
+export default function JobDatail() {
 	const navigate = useNavigate();
 	// ojo, el nombre del parámetro que vas a recuperar se lo pones tú pero debe ser el mismo que estás recuperando en en route. si le pones job-desription, tiene que ser igual en ambos lados
 	const { id } = useParams(); // esto puede recuperar la id de la url.

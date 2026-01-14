@@ -1,7 +1,7 @@
-import { HomePage } from "../pages/Home";
-import { SearchPage } from "../pages/Search";
-import { NotFoundPage } from "../pages/404";
-import { ContactPage } from "../pages/Contact";
+import HomePage from "../pages/Home";
+import SearchPage from "../pages/Search";
+import NotFoundPage from "../pages/404";
+import ContactPage from "../pages/Contact";
 
 
 export const allPages = [

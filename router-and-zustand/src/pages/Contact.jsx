@@ -1,5 +1,5 @@
 import { ContactForm } from "../components/ContactForm";
-export function ContactPage() {
+export default function ContactPage() {
 	return (
 		<main>
 			<ContactForm />
