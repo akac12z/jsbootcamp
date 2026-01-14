@@ -1,3 +1,4 @@
+import { NavLink } from "react-router";
 import { Link } from "./Link";
 import styles from "./header.module.css";
 
@@ -23,9 +24,32 @@ function Header() {
 			</Link>
 
 			<nav className={styles.forNav}>
-				<Link href="/"> Inicio </Link>
-				<Link href="/search">Empleos</Link>
-				<Link href="/contact">Contacto</Link>
+				<NavLink
+					className={({ isActive }) =>
+						isActive ? `${styles.nav_link_active}` : ""
+					}
+					to="/"
+				>
+					Inicio
+				</NavLink>
+				<NavLink
+					className={({ isActive }) =>
+						isActive ? `${styles.nav_link_active}` : ""
+					}
+					to="/search"
+				>
+					Empleo
+				</NavLink>
+				<NavLink
+					className={({ isActive }) =>
+						isActive ? `${styles.nav_link_active}` : ""
+					}
+					to="/contact"
+				>
+					Contact
+				</NavLink>
+				{/* <Link href="/search">Empleos</Link>
+				<Link href="/contact">Contacto</Link> */}
 			</nav>
 		</header>
 	);

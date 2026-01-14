@@ -28,6 +28,13 @@ a {
 	}
 }
 
+.nav_link_active {
+	color: var(--primary);
+	pointer-events: none;
+	opacity: 0.6;
+	user-select: none;
+}
+
 /* Navegación del header a otras páginas */
 .forNav {
 	align-items: center;
