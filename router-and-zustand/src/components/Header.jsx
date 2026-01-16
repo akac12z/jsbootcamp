@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 import { Link } from "./Link";
 import styles from "./header.module.css";
 
-function Header() {
+function Header({ isLoggedIn, onLogIn, onLogOut }) {
 	return (
 		<header className={styles.header}>
 			<Link href="/">
@@ -23,6 +23,11 @@ function Header() {
 			</Link>
 
 			<nav className={styles.forNav}>
+				{isLoggedIn ? (
+					<button onClick={onLogOut}>Cerrar Sesion</button>
+				) : (
+					<button onClick={onLogIn}>Iniciar Sesión</button>
+				)}
 				<NavLink
 					className={({ isActive }) =>
 						isActive ? `${styles.nav_link_active}` : ""

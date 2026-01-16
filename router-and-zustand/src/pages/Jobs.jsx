@@ -8,21 +8,27 @@ import { useParams, useNavigate } from "react-router";
 
 const API_URL = "https://jscamp-api.vercel.app/api/jobs";
 
+function JobDetailBreadcrumbs({ titulo }) {
+	return (
+		<div className={styles.container}>
+			<nav className={styles.breadcrumb}>
+				<Link
+					href="/search"
+					className={styles.breadcrumbButton}
+				>
+					Empleos
+				</Link>
+				<span className={styles.breadcrumbSeparator}>/</span>
+				<span className={styles.breadcrumbCurrent}>{titulo}</span>
+			</nav>
+		</div>
+	);
+}
+
 function JobHeader({ isLoggedIn, titulo, empresa, ubicacion }) {
 	return (
 		<section>
-			<div className={styles.container}>
-				<nav className={styles.breadcrumb}>
-					<Link
-						href="/search"
-						className={styles.breadcrumbButton}
-					>
-						Empleos
-					</Link>
-					<span className={styles.breadcrumbSeparator}>/</span>
-					<span className={styles.breadcrumbCurrent}>{titulo}</span>
-				</nav>
-			</div>
+			<JobDetailBreadcrumbs titulo={titulo} />
 
 			<header className={styles.header}>
 				<h1 className={styles.title}>{titulo}</h1>
@@ -59,7 +65,7 @@ function JobSection({ title, content }) {
 	);
 }
 
-export default function JobDatail() {
+export default function JobDatail({ isLoggedIn }) {
 	const navigate = useNavigate();
 	// ojo, el nombre del parámetro que vas a recuperar se lo pones tú pero debe ser el mismo que estás recuperando en en route. si le pones job-desription, tiene que ser igual en ambos lados
 	const { id } = useParams(); // esto puede recuperar la id de la url.
@@ -118,7 +124,7 @@ export default function JobDatail() {
 				empresa={job.empresa}
 				titulo={job.titulo}
 				ubicacion={job.ubicacion}
-				// isLoggedIn={isLoggedIn}
+				isLoggedIn={isLoggedIn}
 			/>
 
 			<JobSection

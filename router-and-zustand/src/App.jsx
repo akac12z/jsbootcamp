@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import { Route, Routes } from "react-router";
 
 import { allPages } from "./global/pages";
@@ -20,6 +20,15 @@ const ContactPage = lazy(() => import("./pages/Contact.jsx"));
 const JobDatail = lazy(() => import("./pages/Jobs.jsx"));
 
 function App() {
+	// para tener la autenticación para los usuarios
+	const [isLoggedIn, setisLoggedIn] = useState(false);
+	const handleLogIn = () => {
+		setisLoggedIn(true);
+	};
+	const handleLogOut = () => {
+		setisLoggedIn(false);
+	};
+
 	// // necesito poder saber en qué path estoy para poder moverme entre páginas
 	// const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
@@ -51,7 +60,12 @@ function App() {
 
 	return (
 		<>
-			<Header />
+			<Header
+				// el header necesita saber si está logged para mostrar o no el botón por ende, necesita saber el estado
+				isLoggedIn={isLoggedIn}
+				onLogIn={handleLogIn}
+				onLogOut={handleLogOut}
+			/>
 			{/* {allPages.map((page) => {
 					const { key, path, component } = page;
 					
@@ -87,7 +101,7 @@ function App() {
 					/>
 					<Route
 						path="/jobs/:id" // este :id es para buscar por el id del job pero :id puedes poiner lo que quieras, :keyword, :data, :job-description... pero siempre que en el componente que estás renderizando el useParams (en este caso en el Datail.jsx) tenga el mismo nombre
-						element={<JobDatail />}
+						element={<JobDatail isLoggedIn={isLoggedIn} />}
 					/>
 					<Route
 						path="*" // para el resto de componentes usará el NotFound
