@@ -20,15 +20,19 @@ const ContactPage = lazy(() => import("./pages/Contact.jsx"));
 const JobDatail = lazy(() => import("./pages/Jobs.jsx"));
 
 function App() {
-	// para tener la autenticación para los usuarios
-	const [isLoggedIn, setisLoggedIn] = useState(false);
+	// para tener la autenticación para los usuarios pero tenerlo aquí es un problema.
+	// se crea el PROP DRILLING y el rendimiento disminuye mucho cuanto más profundo sea la autenticación (haciendola de esta manera) porque renderiza "todo" cada vez que hacer login/logout por tenerlo tan arriba
+	// para solucionarlo, tb exite el React Context -> crea un estado global
+	/*
+COMENTO ESTO PORQUE AHORA LO VOY A HACER CON EL AUTH CONTEXT y tiene que estar allí
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const handleLogIn = () => {
-		setisLoggedIn(true);
+		setIsLoggedIn(true);
 	};
 	const handleLogOut = () => {
-		setisLoggedIn(false);
+		setIsLoggedIn(false);
 	};
-
+*/
 	// // necesito poder saber en qué path estoy para poder moverme entre páginas
 	// const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
@@ -61,10 +65,11 @@ function App() {
 	return (
 		<>
 			<Header
-				// el header necesita saber si está logged para mostrar o no el botón por ende, necesita saber el estado
-				isLoggedIn={isLoggedIn}
-				onLogIn={handleLogIn}
-				onLogOut={handleLogOut}
+			// el header necesita saber si está logged para mostrar o no el botón por ende, necesita saber el estado
+			// ya. no me hace falta :down gracias al context
+			// isLoggedIn={isLoggedIn}
+			// onLogIn={handleLogIn}
+			// onLogOut={handleLogOut}
 			/>
 			{/* {allPages.map((page) => {
 					const { key, path, component } = page;
@@ -101,7 +106,11 @@ function App() {
 					/>
 					<Route
 						path="/jobs/:id" // este :id es para buscar por el id del job pero :id puedes poiner lo que quieras, :keyword, :data, :job-description... pero siempre que en el componente que estás renderizando el useParams (en este caso en el Datail.jsx) tenga el mismo nombre
-						element={<JobDatail isLoggedIn={isLoggedIn} />}
+						element={
+							<JobDatail
+							// isLoggedIn={isLoggedIn} -> gracias al contexto lo puedo comentar
+							/>
+						}
 					/>
 					<Route
 						path="*" // para el resto de componentes usará el NotFound

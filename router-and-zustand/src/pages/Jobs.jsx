@@ -2,7 +2,8 @@ import styles from "./jobs.module.css";
 import snarkdown from "snarkdown";
 
 import { Link } from "../components/Link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../context/authContext";
 import { useParams, useNavigate } from "react-router";
 // import { JobHeader } from "../components/JobHeaderPage";
 
@@ -25,7 +26,9 @@ function JobDetailBreadcrumbs({ titulo }) {
 	);
 }
 
-function JobHeader({ isLoggedIn, titulo, empresa, ubicacion }) {
+function JobHeader({ titulo, empresa, ubicacion }) {
+	// isLoggedIn ya no le llega por props sino por el context
+	const { isLoggedIn } = useContext(AuthContext);
 	return (
 		<section>
 			<JobDetailBreadcrumbs titulo={titulo} />
@@ -65,7 +68,9 @@ function JobSection({ title, content }) {
 	);
 }
 
-export default function JobDatail({ isLoggedIn }) {
+export default function JobDatail() {
+	const { isLoggedIn } = useContext(AuthContext);
+
 	const navigate = useNavigate();
 	// ojo, el nombre del parámetro que vas a recuperar se lo pones tú pero debe ser el mismo que estás recuperando en en route. si le pones job-desription, tiene que ser igual en ambos lados
 	const { id } = useParams(); // esto puede recuperar la id de la url.

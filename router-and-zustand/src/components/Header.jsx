@@ -1,8 +1,25 @@
 import { NavLink } from "react-router";
+
 import { Link } from "./Link";
 import styles from "./header.module.css";
+import { useContext } from "react";
+import { AuthContext } from "../context/authContext";
 
-function Header({ isLoggedIn, onLogIn, onLogOut }) {
+const HeaderUserButton = () => {
+	const { isLoggedIn, login, logout } = useContext(AuthContext);
+
+	return isLoggedIn ? (
+		<button onClick={logout}>Cerrar sesión</button>
+	) : (
+		<button onClick={login}>Iniciar sesión</button>
+	);
+};
+
+function Header() {
+	// las props que recibia el header como ya no le llegan como propos sino que es a través del contexto, tienes que importarlo de forma "normal"
+	// { isLoggedIn, onLogIn, onLogOut
+	// }
+
 	return (
 		<header className={styles.header}>
 			<Link href="/">
@@ -23,11 +40,7 @@ function Header({ isLoggedIn, onLogIn, onLogOut }) {
 			</Link>
 
 			<nav className={styles.forNav}>
-				{isLoggedIn ? (
-					<button onClick={onLogOut}>Cerrar Sesion</button>
-				) : (
-					<button onClick={onLogIn}>Iniciar Sesión</button>
-				)}
+				<HeaderUserButton />
 				<NavLink
 					className={({ isActive }) =>
 						isActive ? `${styles.nav_link_active}` : ""

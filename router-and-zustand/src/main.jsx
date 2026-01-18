@@ -3,11 +3,12 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
+import { AuthProvider } from "./context/authContext.jsx"; // importando esto, permite a la app poder ver los estados que tu quieres (los que tienes el el context) desde cualquier para de la app sin prop drilling y no joder el rendimiento
 
 createRoot(document.getElementById("root")).render(
 	<BrowserRouter>
-		<StrictMode>
+		<AuthProvider>
 			<App />
-		</StrictMode>
-	</BrowserRouter>
+		</AuthProvider>
+	</BrowserRouter>,
 );
