@@ -1,5 +1,5 @@
 // esto se puede tener para la autenticación y crear un constexto global y evitar el problema de prop drilling
-import { useState, createContext } from "react";
+import { useState, createContext, useContext } from "react";
 
 export const AuthContext = createContext();
 /* cuando tienes un contexto necesitas:
@@ -22,4 +22,14 @@ export function AuthProvider({ children }) {
 	const value = { isLoggedIn, login, logout };
 
 	return <AuthContext value={value}>{children}</AuthContext>;
+}
+
+export function useAuth() {
+	const context = useContext(AuthContext);
+
+	if (context === undefined) {
+		throw new Error("useAuth must be used within an AuthProvider");
+	}
+
+	return context;
 }

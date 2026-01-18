@@ -3,10 +3,11 @@ import { NavLink } from "react-router";
 import { Link } from "./Link";
 import styles from "./header.module.css";
 import { useContext } from "react";
-import { AuthContext } from "../context/authContext";
+import { useAuth } from "../context/authContext";
+// import { useAuth } from "../hooks/useAuth";
 
 const HeaderUserButton = () => {
-	const { isLoggedIn, login, logout } = useContext(AuthContext);
+	const { isLoggedIn, login, logout } = useAuth();
 
 	return isLoggedIn ? (
 		<button onClick={logout}>Cerrar sesión</button>
