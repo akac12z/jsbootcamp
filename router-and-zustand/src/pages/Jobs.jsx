@@ -5,6 +5,7 @@ import { Link } from "../components/Link";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/authContext";
 import { useParams, useNavigate } from "react-router";
+import { useAuthStore } from "../store/authStore";
 // import { JobHeader } from "../components/JobHeaderPage";
 
 const API_URL = "https://jscamp-api.vercel.app/api/jobs";
@@ -26,9 +27,22 @@ function JobDetailBreadcrumbs({ titulo }) {
 	);
 }
 
+function JobApplyBtn() {
+	const { isLoggedIn } = useAuthStore();
+	return (
+		<button
+			disabled={!isLoggedIn}
+			className={styles.applyButton}
+		>
+			{isLoggedIn ? "Aplicar ahora" : "Inicia sesión para aplicar"}
+		</button>
+	);
+}
+
 function JobHeader({ titulo, empresa, ubicacion }) {
 	// isLoggedIn ya no le llega por props sino por el context
-	const { isLoggedIn } = useAuth();
+	// const { isLoggedIn } = useAuth();
+	// const { isLoggedIn } = useAuthStore();
 	return (
 		<section>
 			<JobDetailBreadcrumbs titulo={titulo} />
@@ -40,12 +54,7 @@ function JobHeader({ titulo, empresa, ubicacion }) {
 				</p>
 			</header>
 
-			<button
-				disabled={!isLoggedIn}
-				className={styles.applyButton}
-			>
-				{isLoggedIn ? "Aplicar ahora" : "Inicia sesión para aplicar"}
-			</button>
+			<JobApplyBtn />
 		</section>
 	);
 }
@@ -69,7 +78,8 @@ function JobSection({ title, content }) {
 }
 
 export default function JobDatail() {
-	const { isLoggedIn } = useAuth();
+	// const { isLoggedIn } = useAuth();
+	// const { isLoggedIn } = useAuthStore();
 
 	const navigate = useNavigate();
 	// ojo, el nombre del parámetro que vas a recuperar se lo pones tú pero debe ser el mismo que estás recuperando en en route. si le pones job-desription, tiene que ser igual en ambos lados
@@ -129,7 +139,7 @@ export default function JobDatail() {
 				empresa={job.empresa}
 				titulo={job.titulo}
 				ubicacion={job.ubicacion}
-				isLoggedIn={isLoggedIn}
+				// isLoggedIn={isLoggedIn}
 			/>
 
 			<JobSection

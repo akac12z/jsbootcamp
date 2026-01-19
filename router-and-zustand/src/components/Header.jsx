@@ -2,12 +2,15 @@ import { NavLink } from "react-router";
 
 import { Link } from "./Link";
 import styles from "./header.module.css";
-import { useContext } from "react";
-import { useAuth } from "../context/authContext";
+// import { useContext } from "react";
+// import { useAuth } from "../context/authContext";
+import { useAuthStore } from "../store/authStore";
 // import { useAuth } from "../hooks/useAuth";
 
 const HeaderUserButton = () => {
-	const { isLoggedIn, login, logout } = useAuth();
+	// esta ya no me haría falta porqeu uso zustand, por tanto lo importo de mi store
+	// const { isLoggedIn, login, logout } = useAuth();
+	const { isLoggedIn, login, logout } = useAuthStore();
 
 	return isLoggedIn ? (
 		<button onClick={logout}>Cerrar sesión</button>

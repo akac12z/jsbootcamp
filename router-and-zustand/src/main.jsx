@@ -7,12 +7,13 @@ import { AuthProvider } from "./context/authContext.jsx"; // importando esto, pe
 import { FavProvider } from "./context/FavContext.jsx";
 
 // tanto providers tengas, tantos tienes que añadir
+// voy a quitarlos porque estoy usando zustand no me hace falta
 createRoot(document.getElementById("root")).render(
 	<BrowserRouter>
 		<FavProvider>
-			<AuthProvider>
-				<App />
-			</AuthProvider>
+			{/* <AuthProvider> */}
+			<App />
+			{/* </AuthProvider> */}
 		</FavProvider>
 	</BrowserRouter>,
 );
