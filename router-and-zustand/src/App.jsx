@@ -23,6 +23,8 @@ function App() {
 	// para tener la autenticación para los usuarios pero tenerlo aquí es un problema.
 	// se crea el PROP DRILLING y el rendimiento disminuye mucho cuanto más profundo sea la autenticación (haciendola de esta manera) porque renderiza "todo" cada vez que hacer login/logout por tenerlo tan arriba
 	// para solucionarlo, tb exite el React Context -> crea un estado global
+	// este prop drilling se podría usar para apps pequeñas, donde tienes que bajar 1 o 2 capas como mucho. si es más grande y granular, necesitas usar el cnotext api (este context api está pensado para estados que no cambien mucho, por ejemplo, inicio o cierre de sesión) pero para apps a´nu más grandes necesitas bibliotecas como zustand
+
 	/*
 COMENTO ESTO PORQUE AHORA LO VOY A HACER CON EL AUTH CONTEXT y tiene que estar allí
 	const [isLoggedIn, setIsLoggedIn] = useState(false);

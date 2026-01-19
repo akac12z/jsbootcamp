@@ -1,5 +1,6 @@
 // esto se puede tener para la autenticación y crear un constexto global y evitar el problema de prop drilling
-import { useState, createContext, useContext } from "react";
+// en las nuevas versiones de react, a través de la utilidad 'use' en vez de useContext. que además de leer el contexto, permite leer promesas
+import { useState, createContext, use } from "react";
 
 export const AuthContext = createContext();
 /* cuando tienes un contexto necesitas:
@@ -25,7 +26,7 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-	const context = useContext(AuthContext);
+	const context = use(AuthContext);
 
 	if (context === undefined) {
 		throw new Error("useAuth must be used within an AuthProvider");
