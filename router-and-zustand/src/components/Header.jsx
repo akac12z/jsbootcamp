@@ -6,6 +6,22 @@ import styles from "./header.module.css";
 // import { useAuth } from "../context/authContext";
 import { useAuthStore } from "../store/authStore";
 // import { useAuth } from "../hooks/useAuth";
+import { useFavStore } from "../store/favStore";
+
+const FavCount = () => {
+	const { isLoggedIn } = useAuthStore();
+	const { countFav } = useFavStore();
+	return (
+		isLoggedIn && (
+			<NavLink
+				className={(isActive) => (isActive ? "nav-link-active" : "")}
+				to="/profile"
+			>
+				Profile ❤️ {countFav()}
+			</NavLink>
+		)
+	);
+};
 
 const HeaderUserButton = () => {
 	// esta ya no me haría falta porqeu uso zustand, por tanto lo importo de mi store
@@ -19,7 +35,7 @@ const HeaderUserButton = () => {
 	);
 };
 
-function Header() {
+export default function Header() {
 	// las props que recibia el header como ya no le llegan como propos sino que es a través del contexto, tienes que importarlo de forma "normal"
 	// { isLoggedIn, onLogIn, onLogOut
 	// }
@@ -44,6 +60,7 @@ function Header() {
 			</Link>
 
 			<nav className={styles.forNav}>
+				<FavCount />
 				<HeaderUserButton />
 				<NavLink
 					className={({ isActive }) =>
@@ -75,4 +92,3 @@ function Header() {
 		</header>
 	);
 }
-export default Header;
