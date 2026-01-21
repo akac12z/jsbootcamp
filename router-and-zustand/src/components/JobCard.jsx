@@ -1,6 +1,20 @@
 import styles from "./jobCard.module.css";
 import { Link } from "./Link";
 import { useState } from "react";
+import { useFavStore } from "../store/favStore";
+
+function JobCardFavsBtn({ jobId }) {
+	const { toggleFav, isFav } = useFavStore();
+
+	return (
+		<button
+			onClick={() => toggleFav(jobId)}
+			aria-label={isFav(jobId) ? "Remove from favorites" : "Add to favorites"}
+		>
+			{isFav(jobId) ? "❤️" : "🤍"}
+		</button>
+	);
+}
 
 function JobCard({ title, company, location, description, id }) {
 	const [isApplied, setIsApplied] = useState(false);
@@ -37,6 +51,7 @@ function JobCard({ title, company, location, description, id }) {
 			>
 				{btnText}
 			</button>
+			<JobCardFavsBtn jobId={id} />
 		</article>
 	);
 }
