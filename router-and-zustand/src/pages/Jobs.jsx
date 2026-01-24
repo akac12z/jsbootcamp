@@ -3,12 +3,28 @@ import snarkdown from "snarkdown";
 
 import { Link } from "../components/Link";
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/authContext";
+// import { useAuth } from "../context/authContext";
 import { useParams, useNavigate } from "react-router";
 import { useAuthStore } from "../store/authStore";
+import { useFavStore } from "../store/favStore";
 // import { JobHeader } from "../components/JobHeaderPage";
 
 const API_URL = "https://jscamp-api.vercel.app/api/jobs";
+
+function DetailFavBtn({ jobId }) {
+	const { toggleFav, isFav } = useFavStore();
+	const { isLoggedIn } = useAuthStore();
+	return (
+		<button
+			disabled={!isLoggedIn}
+			style={{ marginLeft: "1rem" }}
+			onClick={() => toggleFav(jobId)}
+			aria-label={isFav(jobId) ? "Remove from favorites" : "Add to favorites"}
+		>
+			{isLoggedIn ? (isFav(jobId) ? "❤️" : "🤍") : "🤍"}
+		</button>
+	);
+}
 
 function JobDetailBreadcrumbs({ titulo }) {
 	return (
@@ -39,7 +55,7 @@ function JobApplyBtn() {
 	);
 }
 
-function JobHeader({ titulo, empresa, ubicacion }) {
+function JobHeader({ titulo, empresa, ubicacion, id }) {
 	// isLoggedIn ya no le llega por props sino por el context
 	// const { isLoggedIn } = useAuth();
 	// const { isLoggedIn } = useAuthStore();
@@ -55,6 +71,7 @@ function JobHeader({ titulo, empresa, ubicacion }) {
 			</header>
 
 			<JobApplyBtn />
+			<DetailFavBtn jobId={id} />
 		</section>
 	);
 }
@@ -139,6 +156,7 @@ export default function JobDatail() {
 				empresa={job.empresa}
 				titulo={job.titulo}
 				ubicacion={job.ubicacion}
+				id={job.id} // si no le paso el job.id si me hace la animación y el toggle pero no muestra que esté o no en fav
 				// isLoggedIn={isLoggedIn}
 			/>
 
