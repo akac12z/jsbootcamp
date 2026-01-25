@@ -5,6 +5,7 @@ import { allPages } from "./global/pages";
 // import { Router } from "./components/router/Router";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/protectedRoute.jsx";
 
 // import { HomePage } from "./pages/Home";
 // import { SearchPage } from "./pages/Search";
@@ -18,6 +19,9 @@ const SearchPage = lazy(() => import("./pages/Search.jsx"));
 const NotFoundPage = lazy(() => import("./pages/404.jsx"));
 const ContactPage = lazy(() => import("./pages/Contact.jsx"));
 const JobDatail = lazy(() => import("./pages/Jobs.jsx"));
+const ProfilePage = lazy(() => import("./pages/Profile.jsx"));
+const Login = lazy(() => import("./pages/Login.jsx"));
+const Register = lazy(() => import("./pages/Register.jsx"));
 
 function App() {
 	// para tener la autenticación para los usuarios pero tenerlo aquí es un problema.
@@ -103,6 +107,15 @@ COMENTO ESTO PORQUE AHORA LO VOY A HACER CON EL AUTH CONTEXT y tiene que estar a
 						element={<SearchPage />}
 					/>
 					<Route
+						path="/profile"
+						element={
+							// el protected route debe envolver al componente pero los elementos routes no pueden estar envueltos. es el propio componente que renderiza el route el que puede envolverse
+							<ProtectedRoute redirectTo="/login">
+								<ProfilePage />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
 						path="/contact"
 						element={<ContactPage />}
 					/>
@@ -117,6 +130,14 @@ COMENTO ESTO PORQUE AHORA LO VOY A HACER CON EL AUTH CONTEXT y tiene que estar a
 					<Route
 						path="*" // para el resto de componentes usará el NotFound
 						element={<NotFoundPage />}
+					/>
+					<Route
+						path="/login"
+						element={<Login />}
+					/>
+					<Route
+						path="/register"
+						element={<Register />}
 					/>
 				</Routes>
 			</Suspense>

@@ -82,6 +82,14 @@ export default function Header() {
 					className={({ isActive }) =>
 						isActive ? `${styles.nav_link_active}` : ""
 					}
+					to="/profile"
+				>
+					Perfil
+				</NavLink>
+				<NavLink
+					className={({ isActive }) =>
+						isActive ? `${styles.nav_link_active}` : ""
+					}
 					to="/contact"
 				>
 					Contact
