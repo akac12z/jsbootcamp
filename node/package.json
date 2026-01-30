@@ -5,5 +5,8 @@
 	"author": {
 		"name": "chema",
 		"url": "https://c12z.io"
+	},
+	"dependencies": {
+		"ms": "2.1.3"
 	}
 }
